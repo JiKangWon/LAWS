@@ -69,6 +69,8 @@ class Shift(models.Model):
     name = models.CharField(max_length=50, verbose_name='Tên ca làm việc')
     date = models.DateTimeField(auto_now_add=True, verbose_name='Thời gian mở ca')
     # Lấy số lượng sessions trong một ca
+    def __str__(self):
+        return self.name
     def get_number_of_sessions(self):
         sessions = Session.objects.filter(shift = self)
         return sessions.count()
@@ -94,13 +96,13 @@ class Session(models.Model):
         ('review','review'),
         ('practice','practice')
     )
-    Shift = models.ForeignKey(Shift,on_delete=models.CASCADE, null=True, blank=True)
+    shift = models.ForeignKey(Shift,on_delete=models.CASCADE, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True, verbose_name='Thời gian bắt đầu')
     type = models.CharField(max_length=10,choices=TYPE_CHOICES, default='practice')
     class_obj = models.ForeignKey(Class, on_delete=models.CASCADE, null=True, blank=True)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True, blank=True)
     course = models.ForeignKey(Course,on_delete=models.CASCADE, null=True, blank=True)
-    chapter = models.ManyToManyField(Chapter, verbose_name="Các chương học trong buổi")
+    chapter = models.ManyToManyField(Chapter,blank=True, verbose_name="Các chương học trong buổi")
     note = models.TextField(verbose_name="Ghi chú")
     def __str__(self):
         return f"Buổi học khóa {self.course.name} lúc {self.date}" if self.course else f"Không xác định khóa học"

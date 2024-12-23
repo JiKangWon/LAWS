@@ -44,158 +44,171 @@
     <p>Kỳ học: {{term.name}} </p>
     <h1>Thiết lập ca làm việc</h1>
     <!-- !Session 1 -->
-            <div class="session-1">
-                <h4>Phiên 1:</h4>
-                <div class="select-container">
-                    <label >Class: </label>
-                    <select name="Class" class="Class">
-                        <option value="">Chọn lớp học</option>
-                        {% for cls in classes %}
-                            <option value="{{ cls.id }}">{{ cls.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="select-container">
-                    <label>Subject: </label>
-                    <select name="Subject" class="Subject" disabled>
-                        <option value="">Chọn môn</option>
-                    </select>
-                </div>
-                <div class="select-container">
-                    <label>Course: </label>
-                        <select name="Course" class="Course" disabled>
-                            <option value="">Chọn khóa học</option>
+            <form method="post">
+                {% csrf_token %}
+                <label for="shiftName">
+                    Shift Name:
+                </label>
+                <input type="text" id="shiftName" name="shiftName" placeholder="Đặt tên ca làm việc">
+
+
+                <div class="session-1">
+                    <h4>Phiên 1:</h4>
+                    <div class="select-container">
+                        <label >Class: </label>
+                        <select name="Class1" class="Class">
+                            <option value="">Chọn lớp học</option>
+                            {% for cls in classes %}
+                                <option value="{{ cls.id }}">{{ cls.name }}</option>
+                            {% endfor %}
                         </select>
-                </div>
-                <div class="select-container">
-                    <label>Type: </label>
-                    <select name="Type" class="Type">
-                        <option value="Lrn">Learn</option>
-                        <option value="Rvw">Review</option>
-                        <option value="Prc">Practice</option>
-                    </select>
-                </div>
-                <div class="select-container">
-                    <label>Time: </label>
-                    <input type="datetime-local" name="Time" class="Time">
-                </div>
-            </div>
-<!-- ! Session2 -->
-            <div class="session-2">
-                <h4>Phiên 2:</h4>
-                <div class="select-container">
-                    <label >Class: </label>
-                    <select name="Class" class="Class">
-                        <option value="">Chọn lớp học</option>
-                        {% for cls in classes %}
-                            <option value="{{ cls.id }}">{{ cls.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="select-container">
-                    <label>Subject: </label>
-                    <select name="Subject" class="Subject" disabled>
-                        <option value="">Chọn môn</option>
-                    </select>
-                </div>
-                <div class="select-container">
-                    <label>Course: </label>
-                        <select name="Course" class="Course" disabled>
-                            <option value="">Chọn khóa học</option>
+                    </div>
+                    <div class="select-container">
+                        <label>Subject: </label>
+                        <select name="Subject1" class="Subject" disabled>
+                            <option value="">Chọn môn</option>
                         </select>
-                </div>
-                <div class="select-container">
-                    <label>Type: </label>
-                    <select name="Type" class="Type">
-                        <option value="Lrn">Learn</option>
-                        <option value="Rvw">Review</option>
-                        <option value="Prc">Practice</option>
-                    </select>
-                </div>
-                <div class="select-container">
-                    <label>Time: </label>
-                    <input type="datetime-local" name="Time" class="Time">
-                </div>
-            </div>
-<!-- !Session 3 -->
-            <div class="session-3">
-                <h4>Phiên 3:</h4>
-                <div class="select-container">
-                    <label >Class: </label>
-                    <select name="Class" class="Class">
-                        <option value="">Chọn lớp học</option>
-                        {% for cls in classes %}
-                            <option value="{{ cls.id }}">{{ cls.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="select-container">
-                    <label>Subject: </label>
-                    <select name="Subject" class="Subject" disabled>
-                        <option value="">Chọn môn</option>
-                    </select>
-                </div>
-                <div class="select-container">
-                    <label>Course: </label>
-                        <select name="Course" class="Course" disabled>
-                            <option value="">Chọn khóa học</option>
+                    </div>
+                    <div class="select-container">
+                        <label>Course: </label>
+                            <select name="Course1" class="Course" disabled>
+                                <option value="">Chọn khóa học</option>
+                            </select>
+                    </div>
+                    <div class="select-container">
+                        <label>Type: </label>
+                        <select name="Type1" class="Type">
+                            <option value="learn">Learn</option>
+                            <option value="review">Review</option>
+                            <option value="practice">Practice</option>
                         </select>
+                    </div>
+                    <div class="select-container">
+                        <label>Time: </label>
+                        <input type="datetime-local" name="Time1" class="Time">
+                    </div>
                 </div>
-                <div class="select-container">
-                    <label>Type: </label>
-                    <select name="Type" class="Type">
-                        <option value="Lrn">Learn</option>
-                        <option value="Rvw">Review</option>
-                        <option value="Prc">Practice</option>
-                    </select>
-                </div>
-                <div class="select-container">
-                    <label>Time: </label>
-                    <input type="datetime-local" name="Time" class="Time">
-                </div>
-            </div>
-            <!-- !Session 4 -->
-            <div class="session-4">
-                <h4>Phiên 4:</h4>
-                <div class="select-container">
-                    <label >Class: </label>
-                    <select name="Class" class="Class">
-                        <option value="">Chọn lớp học</option>
-                        {% for cls in classes %}
-                            <option value="{{ cls.id }}">{{ cls.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="select-container">
-                    <label>Subject: </label>
-                    <select name="Subject" class="Subject" disabled>
-                        <option value="">Chọn môn</option>
-                    </select>
-                </div>
-                <div class="select-container">
-                    <label>Course: </label>
-                        <select name="Course" class="Course" disabled>
-                            <option value="">Chọn khóa học</option>
+    <!-- ! Session2 -->
+                <div class="session-2">
+                    <h4>Phiên 2:</h4>
+                    <div class="select-container">
+                        <label >Class: </label>
+                        <select name="Class2" class="Class">
+                            <option value="">Chọn lớp học</option>
+                            {% for cls in classes %}
+                                <option value="{{ cls.id }}">{{ cls.name }}</option>
+                            {% endfor %}
                         </select>
+                    </div>
+                    <div class="select-container">
+                        <label>Subject: </label>
+                        <select name="Subject2" class="Subject" disabled>
+                            <option value="">Chọn môn</option>
+                        </select>
+                    </div>
+                    <div class="select-container">
+                        <label>Course: </label>
+                            <select name="Course2" class="Course" disabled>
+                                <option value="">Chọn khóa học</option>
+                            </select>
+                    </div>
+                    <div class="select-container">
+                        <label>Type: </label>
+                        <select name="Type2" class="Type">
+                            <option value="learn">Learn</option>
+                            <option value="review">Review</option>
+                            <option value="practice">Practice</option>
+                        </select>
+                    </div>
+                    <div class="select-container">
+                        <label>Time: </label>
+                        <input type="datetime-local" name="Time2" class="Time">
+                    </div>
                 </div>
-                <div class="select-container">
-                    <label>Type: </label>
-                    <select name="Type" class="Type">
-                        <option value="Lrn">Learn</option>
-                        <option value="Rvw">Review</option>
-                        <option value="Prc">Practice</option>
-                    </select>
+    <!-- !Session 3 -->
+                <div class="session-3">
+                    <h4>Phiên 3:</h4>
+                    <div class="select-container">
+                        <label >Class: </label>
+                        <select name="Class3" class="Class">
+                            <option value="">Chọn lớp học</option>
+                            {% for cls in classes %}
+                                <option value="{{ cls.id }}">{{ cls.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="select-container">
+                        <label>Subject: </label>
+                        <select name="Subject3" class="Subject" disabled>
+                            <option value="">Chọn môn</option>
+                        </select>
+                    </div>
+                    <div class="select-container">
+                        <label>Course: </label>
+                            <select name="Course3" class="Course" disabled>
+                                <option value="">Chọn khóa học</option>
+                            </select>
+                    </div>
+                    <div class="select-container">
+                        <label>Type: </label>
+                        <select name="Type3" class="Type">
+                            <option value="learn">Learn</option>
+                            <option value="review">Review</option>
+                            <option value="practice">Practice</option>
+                        </select>
+                    </div>
+                    <div class="select-container">
+                        <label>Time: </label>
+                        <input type="datetime-local" name="Time3" class="Time">
+                    </div>
                 </div>
-                <div class="select-container">
-                    <label>Time: </label>
-                    <input type="datetime-local" name="Time" class="Time">
+                <!-- !Session 4 -->
+                <div class="session-4">
+                    <h4>Phiên 4:</h4>
+                    <div class="select-container">
+                        <label >Class: </label>
+                        <select name="Class4" class="Class">
+                            <option value="">Chọn lớp học</option>
+                            {% for cls in classes %}
+                                <option value="{{ cls.id }}">{{ cls.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="select-container">
+                        <label>Subject: </label>
+                        <select name="Subject4" class="Subject" disabled>
+                            <option value="">Chọn môn</option>
+                        </select>
+                    </div>
+                    <div class="select-container">
+                        <label>Course: </label>
+                            <select name="Course4" class="Course" disabled>
+                                <option value="">Chọn khóa học</option>
+                            </select>
+                    </div>
+                    <div class="select-container">
+                        <label>Type: </label>
+                        <select name="Type4" class="Type">
+                            <option value="learn">Learn</option>
+                            <option value="review">Review</option>
+                            <option value="practice">Practice</option>
+                        </select>
+                    </div>
+                    <div class="select-container">
+                        <label>Time: </label>
+                        <input type="datetime-local" name="Time4" class="Time">
+                    </div>
                 </div>
-            </div>
+                <input type="submit" onclick="announceSuccess()">
+            </form>
 {% endblock content %}
 
 {% block script %}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        function announceSuccess(){
+            alert('Mở ca thành công');
+        }
         $(document).ready(function() {
     // Xử lý khi thay đổi lớp học
     $('div[class^="session-"] .Class').change(function() {

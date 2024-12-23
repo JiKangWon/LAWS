@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from datetime import datetime
 from django.http import JsonResponse
 from .models import *
 
@@ -29,6 +30,33 @@ def get_todolist(request, id):
     return render(request, 'page/todolist.html', context)
 
 def get_open_shift(request, id):
+    # todo: Xử lý thông tin mở ca:
+    if request.method == 'POST':
+        shift = Shift.objects.create(
+            name = request.POST.get('shiftName'),
+        )
+        for i in range(1,5):
+            # todo: Lấy dữ liệu
+            coursePost = request.POST.get(f'Course{i}')
+            datePost = request.POST.get(f'Time{i}')
+            # todo: Tạo mới session
+            courseId = int(coursePost) if coursePost else None
+            course = Course.objects.filter(id = courseId).first()
+            subject = course.subject if course else None
+            classObj = subject.class_object if subject else None
+            date = datetime.fromisoformat(datePost) if datePost else None
+            type = request.POST.get(f'Type{i}')
+            session = Session.objects.create(
+                shift = shift,
+                date = date,
+                type = type,
+                class_obj = classObj,
+                subject = subject,
+                course = course,
+            )
+            chapter = Chapter.objects.filter(id = 3).first()
+            session.chapter.add(chapter)  
+    # todo: Đẩy dữ liệu của người dùng lên web
     user = User.objects.filter(id=id).first()
     user_inf = UserInfo.objects.filter(user=user).first()
     term = Term.objects.filter(user=user).first()

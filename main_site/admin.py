@@ -124,13 +124,37 @@ class SubjectAdmin(admin.ModelAdmin):
             obj.class_object.name,
         )
     
+@admin.register(Shift)
+class ShiftAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'name',
+        'date',
+    )
+
 @admin.register(Session)
 class SessionAdmin(admin.ModelAdmin):
     list_display = (
         'id',
+        'shift_link',
+        'date',
         'type',
+        'class_link',
+        'subject_link',
         'course_link',
+        'chapters_link',
+        'note',
     )
+    def chapters_link(self, obj):
+        chapters = obj.chapter.all()
+        if not chapters:
+            return "No Chapters"
+        res = ''
+        for chapter in chapters:
+            res += f'<a href="/admin/{chapter._meta.app_label}/{chapter._meta.model_name}/{chapter.pk}/change/">Chương {chapter.number}. {chapter.title}</a><br>'
+        return format_html(
+            res
+        )
     def course_link(self, obj):
         if obj.course:
             return format_html('<a href="/admin/{}/{}/{}/change/">{}</a>', 
@@ -140,6 +164,31 @@ class SessionAdmin(admin.ModelAdmin):
                 obj.course.name,
             )
         return "No Link to Course"
+    def subject_link(self, obj):
+        if obj.subject:
+            return format_html('<a href="/admin/{}/{}/{}/change/">{}</a>', 
+                obj.subject._meta.app_label, 
+                obj.subject._meta.model_name, 
+                obj.subject.pk, 
+                obj.subject.name,
+            )
+    def shift_link(self, obj):
+        if obj.shift:
+            return format_html('<a href="/admin/{}/{}/{}/change/">{}</a>', 
+                obj.shift._meta.app_label, 
+                obj.shift._meta.model_name, 
+                obj.shift.pk, 
+                obj.shift.name,
+            )
+    def class_link(self, obj):
+        if obj.class_obj:
+            return format_html('<a href="/admin/{}/{}/{}/change/">{}</a>', 
+                obj.class_obj._meta.app_label, 
+                obj.class_obj._meta.model_name, 
+                obj.class_obj.pk, 
+                obj.class_obj.name,
+            )
+    
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
@@ -166,6 +215,7 @@ class ChapterAdmin(admin.ModelAdmin):
         'id',
         'number',
         'course_link',
+        'link_url',
     )
     def course_link(self, obj):
         return format_html('<a href="/admin/{}/{}/{}/change/">{}</a>', 
@@ -174,6 +224,8 @@ class ChapterAdmin(admin.ModelAdmin):
             obj.course.pk, 
             obj.course.name,
         )
+    def link_url(self,obj):
+        return format_html('<a href="{}">LINK</a>',obj.link)
 
 @admin.register(ContentOfChapters)
 class ContentOfChaptersAdmin(admin.ModelAdmin):

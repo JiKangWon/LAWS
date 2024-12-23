@@ -5,11 +5,15 @@
 {% block title %}{% endblock title %}
 
 {% block content %}
+    <a href="{% url 'open_shift' id=user.id %}">Mở ca</a>
+    <a href="{% url 'close_shift' id=user.id %}">Kết ca</a>
     <h1>Home</h1>
     <p>
         Xin chào, {{user_inf.name}}
     </p>
-    <!-- Ở trang home sẽ code giao diện hướng dẫn cách sử dụng web cho học viên -->
+    {% comment %} 
+        todo: Hướng dẫn sử dụng website
+    {% endcomment %}
 {% endblock content %}
 
 {% block script %}{% endblock script %}
