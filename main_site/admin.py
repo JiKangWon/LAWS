@@ -128,19 +128,18 @@ class SubjectAdmin(admin.ModelAdmin):
 class SessionAdmin(admin.ModelAdmin):
     list_display = (
         'id',
-        'date_of_execution',
-        'start',
-        'end',
         'type',
-        'subject_link',
+        'course_link',
     )
-    def subject_link(self, obj):
-        return format_html('<a href="/admin/{}/{}/{}/change/">{}</a>', 
-            obj.subject._meta.app_label, 
-            obj.subject._meta.model_name, 
-            obj.subject.pk, 
-            obj.subject.name,
-        )
+    def course_link(self, obj):
+        if obj.course:
+            return format_html('<a href="/admin/{}/{}/{}/change/">{}</a>', 
+                obj.course._meta.app_label, 
+                obj.course._meta.model_name, 
+                obj.course.pk, 
+                obj.course.name,
+            )
+        return "No Link to Course"
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):

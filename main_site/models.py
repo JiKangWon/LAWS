@@ -56,19 +56,6 @@ class Subject(models.Model):
         return self.name
 
 
-class Session(models.Model):
-    TYPE_CHOICES = (
-        ('learn','learn'),
-        ('review','review'),
-        ('practice','practice')
-    )
-    date_of_execution = models.DateField(verbose_name='Ngày tiến hành', auto_now_add=True)
-    start = models.TimeField(verbose_name='Thời gian bắt đầu')
-    end = models.TimeField(verbose_name='Thời gian kết thúc')
-    type = models.CharField(max_length=10,choices=TYPE_CHOICES, default='prac')
-    subject = models.ForeignKey(Subject,on_delete=models.CASCADE, null=True, blank=True)
-    def __str__(self):
-        return f"Buổi học môn {self.subject.name} lúc {self.start}"
 
 class Course(models.Model):
     subject = models.ForeignKey(Subject,on_delete=models.CASCADE, null=True, verbose_name='Thông tin môn học của khóa')
@@ -78,16 +65,47 @@ class Course(models.Model):
     def __str__(self):
         return self.name
 
+class Shift(models.Model):
+    name = models.CharField(max_length=50, verbose_name='Tên ca làm việc')
+    date = models.DateTimeField(auto_now_add=True, verbose_name='Thời gian mở ca')
+    # Lấy số lượng sessions trong một ca
+    def get_number_of_sessions(self):
+        sessions = Session.objects.filter(shift = self)
+        return sessions.count()
+    # Lấy thời gian kết ca
+    def get_end(self):
+        return self.date + timedelta(minutes=60) * self.get_number_of_sessions()
+
 class Chapter(models.Model):
     title = models.CharField(max_length=250, verbose_name='Tiêu đề chương')
     number = models.IntegerField(verbose_name='Số thứ tự')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='Thông tin khóa học của chương')
+    link = models.URLField(max_length=250,verbose_name='Link to Theory File', null=True)
     def __str__(self):
         return f"Chương {self.number}. {self.title}"
     def get_next_reviewed_day(self):
         pass
     def get_the_completion_rate(self):
         pass
+
+class Session(models.Model):
+    TYPE_CHOICES = (
+        ('learn','learn'),
+        ('review','review'),
+        ('practice','practice')
+    )
+    Shift = models.ForeignKey(Shift,on_delete=models.CASCADE, null=True, blank=True)
+    date = models.DateTimeField(auto_now_add=True, verbose_name='Thời gian bắt đầu')
+    type = models.CharField(max_length=10,choices=TYPE_CHOICES, default='practice')
+    class_obj = models.ForeignKey(Class, on_delete=models.CASCADE, null=True, blank=True)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True, blank=True)
+    course = models.ForeignKey(Course,on_delete=models.CASCADE, null=True, blank=True)
+    chapter = models.ManyToManyField(Chapter, verbose_name="Các chương học trong buổi")
+    note = models.TextField(verbose_name="Ghi chú")
+    def __str__(self):
+        return f"Buổi học khóa {self.course.name} lúc {self.date}" if self.course else f"Không xác định khóa học"
+    def get_end(self):
+        return self.start + timedelta(minutes=60)
 
 class ContentOfChapters(models.Model):
     chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE, verbose_name='Thông tin chương')
