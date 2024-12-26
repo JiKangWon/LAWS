@@ -31,6 +31,34 @@
     </table>
     <a href="{% url 'open_shift' id=user.id %}">Mở ca</a>
     <a href="{% url 'close_shift' id=user.id %}">Kết ca</a>
+    <table border="1px">
+        <tr>
+            <th>
+                Shift's name:
+            </th>
+            <td>
+                {{shift.name}}
+            </td>           
+        </tr>       
+    </table>
+    {% for session in sessions %}
+    <div class="Session{{forloop.counter}}">
+        <h2>Session {{forloop.counter}}</h2>
+        <div>
+            Class: {{session.classObj.name}}
+        </div>
+        <div>
+            Time: {{session.startTime|date:"H:i"}} - {{session.endTime|date:"H:i"}}
+        </div>
+        <div>
+            Type: {{session.type}}
+        </div>
+    </div>
+   
+   
+    {% endfor %}
+   
+
 {% endblock content %}
 
 {% block script %}{% endblock script %}

@@ -1,11 +1,146 @@
 {% extends "base/base.html" %}
-
-{% block style %}{% endblock style %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static "css/closeShift.css" %}">
+{% endblock style %}
 
 {% block title %}{% endblock title %}
 
 {% block content %}
-    <h1>Giao diện kết ca</h1>
+<h1>Giao diện kết ca</h1>
+<button onclick="getCreateChapter()">Tạo chương mới</button>
+<hr>
+<form method="POST">
+    <div >
+        Shift's name: {{shift.name}}
+    </div>
+    {% for session in sessions %}
+    <div class="Session{{forloop.counter}}">
+        <h3 >Session {{forloop.counter}} </h3>
+        <div >
+            Class: {{session.classObj.name}}
+        </div>
+        <div >
+            Start: 
+            <input type="datetime-local" name="start" value="{{session.getStart}}">
+        </div>
+        <div >
+            End: 
+            <input type="datetime-local" name="end" value="{{session.getEnd}}">
+        </div>
+        <div >
+            Subject:
+            <select name="subject" class="Subject Session{{forloop.counter}}">
+                <option value="">--Select a subject--</option>
+                {% for subject in session.classObj.getSubjectList %}
+                <option value="{{subject.id}}">{{subject.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="ChapterContainer Session{{forloop.counter}}">
+            Chapter: 
+            <select name="chapter" class="Chapter Session{{forloop.counter}}">
+                <option value="">--Select chapters in this session--</option>
+            </select>
+            <div class="MoreChapter Session{{forloop.counter}}">+</div>
+        </div>
+    </div>
+    {% endfor %}
+    <button type="submit">Submit</button>
+</form>
 {% endblock content %}
 
-{% block script %}{% endblock script %}
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script >
+    $(".MoreChapter").click(function () {
+        const parentDiv = $(this).parent();
+        let session = "";
+    
+        // Lấy lớp chứa "Session"
+        let parentDivClassList = parentDiv.attr("class").split(" ");
+        for (let className of parentDivClassList) {
+            if (className.includes("Session")) {
+                session = className;
+                break;
+            }
+        }
+    
+        // Lấy phần tử Subject theo session
+        const subjectSelect = document.getElementsByClassName(`Subject ${session}`);
+        if (!subjectSelect.length) {
+            alert("No Subject element found for this session!");
+            return;
+        }
+    
+        const subjectId = subjectSelect[0].value;
+        if (!subjectId) {
+            alert("Please select a subject first.");
+            return;
+        }
+    
+        // Gửi yêu cầu AJAX
+        $.ajax({
+            url: "{% url 'getChapters' %}", // URL đến view backend
+            type: "GET",
+            data: { subjectId: subjectId },
+            success: function (response) {
+                // Tạo dropdown sau khi nhận được dữ liệu
+                let res = `
+                    <select name="chapter" class="Chapter">
+                        <option value="">--Select chapters in this session--</option>
+                `;
+    
+                // Thêm các chapter vào dropdown
+                response.chapters.forEach(function (chapter) {
+                    res += `<option value="${chapter.id}">${chapter.title}</option>`;
+                });
+    
+                res += `</select>`;
+    
+                // Thêm dropdown vào parentDiv
+                parentDiv.append(res);
+            },
+            error: function () {
+                alert("Failed to fetch chapters. Please try again.");
+            }
+        });
+    });
+    
+</script>
+<script>
+    $(document).ready(function () {
+        $('.Subject').on('change', function () {
+            const subjectId = $(this).val(); 
+            console.log(subjectId);
+            const chapterSelect = $(this).closest('div').next().find('.Chapter'); 
+            if (subjectId) {
+                $.ajax({
+                    url: "{% url 'getChapters' %}", // URL đến view backend
+                    type: "GET",
+                    data: { subjectId: subjectId },
+                    success: function (response) {
+                        chapterSelect.empty(); 
+                        chapterSelect.append('<option value="">--Select chapters in this session--</option>');       
+                        response.chapters.forEach(function (chapter) {
+                            chapterSelect.append(`<option value="${chapter.id}">${chapter.title}</option>`);
+                        });
+                    },
+                    error: function () {
+                        alert('Failed to fetch chapters. Please try again.');
+                    }
+                });
+            } else {
+                chapterSelect.empty();
+                chapterSelect.append('<option value="">--Select chapters in this session--</option>');
+            }
+        });
+    });
+</script>
+<script >
+    const linkCreateChapter = "{% url 'createChapter' %}"
+    function getCreateChapter(){
+        newWindow = window.open(linkCreateChapter, 'Tạo chapter', 'width=400,height=400,left=0,top=0')
+    }
+</script>
+{% endblock script %}

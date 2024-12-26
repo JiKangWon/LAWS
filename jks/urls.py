@@ -22,12 +22,12 @@ from main_site import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.get_home, name='home'),
+    path('',views.getHome, name='home'),
     path('todo/id=<int:id>/', views.get_todolist, name='todolist'),
-    path('todo/open/id=<int:id>/', views.get_open_shift, name='open_shift'),
+    path('todo/open/id=<int:id>/', views.getOpenShift, name='open_shift'),
     path('todo/close/id=<int:id>/', views.get_close_shift, name='close_shift'),
-    path('todo/get-subject/',views.get_subject, name='get_subject'),
-    path('todo/get-course/',views.get_course, name='get_course'),
+    path('models/chapters/create/', views.getCreateChapter, name='createChapter'),
+    path('getChapters/', views.getChapters, name='getChapters')
 ] 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

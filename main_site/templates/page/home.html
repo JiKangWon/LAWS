@@ -7,6 +7,7 @@
 {% block content %}
     <a href="{% url 'open_shift' id=user.id %}">Mở ca</a>
     <a href="{% url 'close_shift' id=user.id %}">Kết ca</a>
+    <a href="{% url "todolist" id=user.id %}">Todo</a>
     <h1>Home</h1>
     <p>
         Xin chào, {{user_inf.name}}

@@ -1,0 +1,60 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/openShift.css' %}">
+{% endblock style %}
+
+{% block title %} Open a shift {% endblock title %}
+
+{% block content %}
+<div class="TermInfomation">
+    Term: {{term.name}}
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <label for="shiftName">
+        Shift name:
+        <input name="shiftName" id="shiftName" placeholder="Enter your shift name">
+    </label>
+    {% for index in numberRange %}
+        <div class="Session{{index}}">
+            <h2>Session {{index}}</h2>
+            <label>
+                Select a class:
+                <select name="class{{index}}" class="Class">
+                    <option value="">Select a class</option>
+                    {% for class in classes %}
+                    <option value="{{class.id}}">{{class.name}}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <br>
+            <label>
+                Select start time:
+                <input type="datetime-local" name="startTime{{index}}" >
+            </label>
+            <br>
+            <label>
+                Select end time:
+                <input type="datetime-local" name="endTime{{index}}" >
+            </label>
+            <br>
+            <label>
+                Select type of session:
+                <select name="type{{index}}" class="Type">
+                    <option value="learn">Learn</option>
+                    <option value="review">Review</option>
+                    <option value="practice">Practice</option>
+                </select>
+            </label>
+        </div>
+    {% endfor %}
+    <input type="submit" value="Submit">
+</form>
+{% endblock content %}
+
+{% block script %}
+<script src="{% static 'js/OpenShift.js' %}"></script>  
+{% endblock script %}

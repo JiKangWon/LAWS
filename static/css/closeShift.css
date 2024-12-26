@@ -1,0 +1,10 @@
+.MoreChapter{
+    border-radius: 3px;
+    border: 1px solid black;
+    display: inline-block;
+    width: 20px;
+}
+.MoreChapter:hover{
+    background-color: lightgray;
+    cursor: pointer;
+}
