@@ -1,10 +1,10 @@
-.MoreChapter{
+.ClickTag{
     border-radius: 3px;
     border: 1px solid black;
     display: inline-block;
-    width: 20px;
+    width: auto;
 }
-.MoreChapter:hover{
+.ClickTag:hover{
     background-color: lightgray;
     cursor: pointer;
 }

@@ -26,8 +26,9 @@ urlpatterns = [
     path('todo/id=<int:id>/', views.get_todolist, name='todolist'),
     path('todo/open/id=<int:id>/', views.getOpenShift, name='open_shift'),
     path('todo/close/id=<int:id>/', views.get_close_shift, name='close_shift'),
-    path('models/chapters/create/', views.getCreateChapter, name='createChapter'),
-    path('getChapters/', views.getChapters, name='getChapters')
+    path('models/chapters/create/id=<int:subjectId>/', views.getCreateChapter, name='createChapter'),
+    path('getChapters/', views.getChapters, name='getChapters'),
+    path('getContentOfChapters/id=<int:chapterId>/', views.getContentOfChapter, name='ContentOfChapter'),
 ] 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

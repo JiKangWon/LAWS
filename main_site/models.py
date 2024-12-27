@@ -168,6 +168,12 @@ class Session(models.Model):
     def getEnd(self):
         return localtime(self.endTime).strftime('%Y-%m-%dT%H:%M')
     
+    # todo: get different choices for processing close shift
+    def getDifferentChoices(self):
+        typeChoices = ['learn', 'review', 'practice']
+        typeChoices.remove(self.type)
+        return typeChoices
+    
 class ContentOfChapters(models.Model):
 
     # ! Fields:

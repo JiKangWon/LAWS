@@ -1,0 +1,13 @@
+{% extends "base/base.html" %}
+
+{% block style %}{% endblock style %}
+
+{% block title %}Content of chapter{% endblock title %}
+
+{% block content %}
+<h1 > Chapter {{chapter.number}}. {{chapter.title}} </h1>
+<p > Subject: {{chapter.subject.name}} </p>
+<a href="{{chapter.link}}">Tutorial link</a>
+{% endblock content %}
+
+{% block script %}{% endblock script %}
