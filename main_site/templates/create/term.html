@@ -1,0 +1,41 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block style %}
+{% endblock style %}
+
+{% block title %}LAW{% endblock title %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <div class="NameContainer">
+        <label for="name">
+            Name:
+            <input name="name" id="name" placeholder="Enter name of your term" required>
+        </label>
+    </div>
+    <div class="StartDateContainer">
+        <label for="startDate">
+            Start Date:
+            <input type="date" id="startDate" name="startDate" required>
+        </label>
+    </div>
+    <div class="EndDateContainer">
+        <label for="endDate">
+            End Date:
+            <input type="date" id="endDate" name="endDate" required>
+        </label>
+    </div>
+    <div class="totalOfMonthContainer">
+        <label for="totalOfMonth">
+            Total of Month:
+            <input type="number" id="totalOfMonth" name="totalOfMonth" required>
+        </label>
+    </div>
+    <button >SAVE</button>
+</form>
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}

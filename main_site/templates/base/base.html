@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -10,14 +11,30 @@
         <title>
             {% block title %}{% endblock title %}
         </title>
+        <meta name="csrf-token" content="{{ csrf_token }}">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static "css/base.css" %}" type="text/css" >
         {% block style %}{% endblock style %}
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <script>
+        function getCSRFToken() {
+            const name = 'csrftoken';
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.startsWith(name + '=')) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return null;
+        }
+        </script>       
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         {% block content %}{% endblock content %}
         {% block script %}{% endblock script %}
     </body>
@@ -25,10 +42,14 @@
 
 {% comment %} {% extends "base/base.html" %}
 
-{% block style %}{% endblock style %}
+{% block style %}
+{% endblock style %}
 
-{% block title %}{% endblock title %}
+{% block title %}
+{% endblock title %}
 
-{% block content %}{% endblock content %}
+{% block content %}
+{% endblock content %}
 
-{% block script %}{% endblock script %} {% endcomment %}
+{% block script %}
+{% endblock script %} {% endcomment %}

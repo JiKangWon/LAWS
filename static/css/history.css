@@ -1,0 +1,14 @@
+.ContentContainer.col{
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 5px;
+    margin: 5px;
+    height: 100px;
+    overflow: auto;
+}
+
+#carlendarFrame{
+    width: 98%;
+    margin: 0 auto;
+    background-color: #ffffff;
+}

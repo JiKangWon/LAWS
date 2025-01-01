@@ -1,0 +1,39 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block style %}
+{% endblock style %}
+
+{% block title %}
+{% endblock title %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <label for="title">
+        Nội dung giao dịch:
+        <input type="text" id="title" placeholder="Điền nội dung" name="title" required>
+    </label>
+    
+    <label for="value">
+        Số tiền:
+        <input type="number" id="value" placeholder="Điền số tiền" name="value" required>
+    </label>
+    
+    <label for="type">
+        Loại giao dịch:
+        <select id="type" name="type" required>
+            <option value="">--Chọn loại giao dịch--</option>
+            {% for type in types %}
+            <option value="{{type.id}}">{{type.name}}</option>
+            {% endfor %}
+        </select>
+    
+    </label>
+    
+    <button type="submit">SAVE</button>
+</form>
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}

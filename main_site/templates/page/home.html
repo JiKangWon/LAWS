@@ -5,9 +5,14 @@
 {% block title %}{% endblock title %}
 
 {% block content %}
-    <a href="{% url 'open_shift' id=user.id %}">Mở ca</a>
-    <a href="{% url 'close_shift' id=user.id %}">Kết ca</a>
-    <a href="{% url "todolist" id=user.id %}">Todo</a>
+    <a href="{% url 'open_shift' id=user.id %}">Open shift</a>
+    <a href="{% url 'close_shift' id=user.id %}">Close shift</a>
+    <a href="{% url "todolist" id=user.id %}">Shift information</a>
+    <a href="{% url "userInformation" userId=user.id %}">User information</a>
+    <a href="{% url "finance" userId=user.id month=now.month year=now.year %}">FINANCE MANAGEMENT</a>
+    <a href="{% url "changePassword" userId=user.id %}">Change password</a>
+    <a href="{% url "home" %}">SIGNOUT</a>
+
     <h1>Home</h1>
     <p>
         Xin chào, {{user_inf.name}}

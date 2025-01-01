@@ -1,0 +1,24 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block style %}
+{% endblock style %}
+
+{% block title %}
+{% endblock title %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    {% for fund in funds %}
+    <label for="fund{{fund.id}}">
+        {{ fund.name }}:
+        <input type="number" id="fund{{fund.id}}" name="fund{{fund.id}}" min="0" value={{fund.value}} required>
+    </label>
+    {% endfor %}
+    <button type="submit">SAVE</button>
+</form>
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}

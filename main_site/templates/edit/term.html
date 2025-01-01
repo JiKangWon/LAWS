@@ -1,0 +1,51 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block style %}
+{% endblock style %}
+
+{% block title %}LAW
+{% endblock title %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <div class="InformationContainer Edit">
+        <label for="name">
+            Name: 
+            <input type="text" name="name" id="name" value="{{term.name}}" required>
+        </label>
+    </div>
+    <div class="InformationContainer Edit">
+        <label for="startDate">
+            Start date:
+            <input type="date" name="startDate" id="startDate" value="{{term.startDate | date:'Y-m-d' }}" required>
+        </label>
+    </div>
+    <div class="InformationContainer Edit">
+        <label for="endDate">
+            End date:
+            <input type="date" name="endDate" id="endDate" value="{{term.endDate | date:'Y-m-d' }}" required>
+        </label>
+    </div>
+    <div class="InformationContainer Edit">
+        <label for="totalOfMonths">
+            Total of months: 
+            <input type="number" min="1" name="totalOfMonths" id="totalOfMonths" value="{{term.totalOfMonths}}" required>
+        </label>
+    </div>
+    <h2 >INFORMATION ABOUT CLASS</h2>
+    <div onclick="createNewClass({{term.id}})">Add</div>
+    {% for class in classes %}
+    <div id="class{{class.id}}" > 
+        <p > {{forloop.counter}}. {{class.name}} </p>
+        <div onclick="delClass({{class.id}})"> Delete </div>
+    </div>
+    {% endfor %}
+    <button type="submit">SAVE</button>
+</form>
+{% endblock content %}
+
+{% block script %}
+<script src="{% static "js/editTerm.js" %}"></script>
+{% endblock script %}

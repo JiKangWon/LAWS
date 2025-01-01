@@ -10,6 +10,7 @@ class UserAdmin(admin.ModelAdmin):
         'id', 
         'username', 
         'password',
+        'balance',
         )
     search_fields = (
         'username',
@@ -41,24 +42,6 @@ class UserInfoAdmin(admin.ModelAdmin):
         )    
     user_link.short_description = 'Account'
 
-# ! Balance:
-@admin.register(Balance)
-class BalanceAdmin(admin.ModelAdmin):
-    list_display = (
-        'id',
-        'user_link',
-        'value'
-    )
-
-    def user_link(self, obj):
-        user_info = UserInfo.objects.filter(user = obj.user).first()
-        return format_html('<a href="/admin/{}/{}/{}/change/">{}</a>', 
-            user_info._meta.app_label, 
-            user_info._meta.model_name, 
-            user_info.pk, 
-            user_info.name,
-        )    
-    user_link.short_description = 'Information of user'  
     
 # ! Term
 @admin.register(Term)
@@ -127,6 +110,7 @@ class ShiftAdmin(admin.ModelAdmin):
         'startTime',
         'endTime',
         'userLink',
+        'status',
     )
     def userLink(self, obj):
         if obj.user:
@@ -303,16 +287,51 @@ class TransactionAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'date',
-        'balanceLink',
+        'userLink',
         'title',
         'type',
         'value',
     )
-    def balanceLink(self, obj):
+    def userLink(self, obj):
+        if obj.user:
+            return format_html('<a href="/admin/{}/{}/{}/change/">{}</a>', 
+                obj.user._meta.app_label, 
+                obj.user._meta.model_name, 
+                obj.user.pk, 
+                obj.user.username,
+            )
+    userLink.short_description = 'User'
+
+@admin.register(DayPathway)
+class DayPathwayAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'ordinal',
+        'classLink',
+    )
+    def classLink(self, obj):
         return format_html('<a href="/admin/{}/{}/{}/change/">{}</a>', 
-            obj.balance._meta.app_label, 
-            obj.balance._meta.model_name, 
-            obj.balance.pk, 
-            obj.balance.user.username,
+            obj.classObj._meta.app_label, 
+            obj.classObj._meta.model_name, 
+            obj.classObj.pk, 
+            obj.classObj.name,
         )
-    balanceLink.short_description = 'Balance'
+    
+@admin.register(SessionPathway)
+class SessionPathwayAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'type',
+        'content',
+        'status',
+        'iCode',
+        'ordinal',
+    )
+
+@admin.register(TypeOfTransaction)
+class TypeOfTransactionAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'name',
+        'maxValue',
+    )

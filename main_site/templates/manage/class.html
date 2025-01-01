@@ -1,0 +1,31 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block style %}{% endblock style %}
+
+{% block title %}LAW{% endblock title %}
+
+{% block content %}
+<a href="{% url "pathway" classId=class.id %}">PATHWAY</a>
+<div class="InformationContainer">
+    <p ><strong >Name:</strong> {{class.name}} </p>
+</div>
+<div class="InformationContainer">
+    <p ><strong >Start date:</strong> {{class.startDate | date:"Y-m-d"}} </p>
+</div>
+<div class="InformationContainer">
+    <p ><strong >End date</strong> {{class.endDate | date:"Y-m-d"}} </p>
+</div>
+<div class="InformationContainer">
+    <p ><strong >Status</strong> {{class.status}} </p>
+</div>
+<h2 >SUBJECTS OF THIS CLASS</h2>
+{% for subject in subjects %}
+<div class="InformationContainer">
+   <a href="{% url "manageSubject" subjectId=subject.id %}"><p class="ClickTag"> {{forloop.counter}}. {{subject.name}} </p></a>
+</div>
+{% endfor %}
+<a href="{% url "editClass" classId=class.id %}"><div class="ClickTag">EDIT</div></a>
+{% endblock content %}
+
+{% block script %}{% endblock script %}

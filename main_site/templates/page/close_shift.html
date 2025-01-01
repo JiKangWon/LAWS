@@ -53,7 +53,7 @@
                 <select name="chapter{{forloop.counter}}" class="Chapter Session{{forloop.counter}}">
                     <option value="">--Select chapters in this session--</option>
                 </select>
-                <div class="ClickTag ContentInformation">Content of this chapter</div>
+                <div class="ClickTag ContentInformation">View</div>
             </div>
         </div>
         <div class="Session{{forloop.counter}} Note">
@@ -69,7 +69,6 @@
 {% endblock content %}
 
 {% block script %}
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="{% static "js/ContentOfChapter.js" %}"></script>
 <script src="{% static "js/CloseShift.js" %}"></script>
 {% endblock script %}

@@ -1,0 +1,8 @@
+.ClickTag{
+    border: 1px solid black;
+    border-radius: 3px;
+}
+.ClickTag:hover{
+    background-color: lightgray;
+    cursor: pointer;
+}

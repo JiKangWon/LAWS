@@ -1,0 +1,48 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block style %}
+{% endblock style %}
+
+{% block title %}
+{% endblock title %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <label for="name">
+        Name:
+        <input type="text" name="name" id="name" value="{{class.name}}" required>
+    </label>
+    <label for="startDate">
+        Start date:
+        <input type="date" name="startDate" id="startDate" value="{{class.startDate | date:"Y-m-d"}}" required>
+    </label>
+    <label for="endDate">
+        End date:
+        <input type="date" name="endDate" id="endDate" value="{{class.endDate | date:"Y-m-d"}}" required>
+    </label>
+    <label for="status">
+        Status:
+        <select id="status" name="status">
+            <option value="{{class.status}}"> {{class.status}} </option>
+            {% for difStatus in class.getDifferentStatus %}
+            <option value="{{difStatus}}"> {{difStatus}} </option>
+            {% endfor %}
+        </select>
+    </label>
+    <h2 >SUBJECTS OF THIS CLASS</h2>
+    <div onclick="createNewSubject({{class.id}})">ADD</div>
+    {% for subject in subjects %}
+    <div id="subject{{subject.id}}">
+        <p > {{subject.name}} </p>
+        <div onclick="delSubject({{subject.id}})">DELETE</div>
+    </div>
+{% endfor %}
+<button type="submit">SAVE</button>
+</form>
+{% endblock content %}
+
+{% block script %}
+<script src="{% static "js/editClass.js" %}"></script>
+{% endblock script %}

@@ -1,0 +1,10 @@
+[onclick]{
+    border: 1px solid black;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+[onclick]:hover{
+    background-color: lightgray;
+    cursor: pointer;
+}

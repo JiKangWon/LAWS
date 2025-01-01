@@ -1,0 +1,61 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block style %}
+{% endblock style %}
+
+{% block title %}
+{% endblock title %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <h1 >Chapter {{chapter.number}}. {{chapter.title}} </h1>
+    <div class="ChapterContainer">
+        <label for="Ordinal">
+            Ordinal:
+            <input type="number" id="Ordinal" name="ordinal" min="1" value="{{chapter.number}}" required>
+        </label>
+        <label for="TitleChapter">
+            Title:
+            <input type="text" id="TitleChapter" name="titleChapter" value="{{chapter.title}}" required>
+        </label>
+        <label for="LinkChapter">
+            Tutorial link:
+            <input type="text" id="LinkChapter" name="linkChapter" value="{{chapter.link}}">
+        </label>
+    </div>
+    {% for content in contents %}
+    <div class="ContentContainer">
+        {% comment %} Edit title, content and link  {% endcomment %}
+        <label for="Title{{forloop.counter}}">
+            Title:
+            <input type="text" id="Title{{forloop.counter}}" name="title{{forloop.counter}}" value="{{content.title}}" required>
+        </label>
+        <label for="Content{{forloop.counter}}">
+            Content:
+            <textarea id="Content{{forloop.counter}}" name="content{{forloop.counter}}" required>{{content.content}}</textarea>
+        </label>
+        <label for="Link{{forloop.counter}}">
+            Link:
+            <input type="text" id="Link{{forloop.counter}}" name="link{{forloop.counter}}" value="{{content.link}}">
+        </label>
+    </div>
+    {% endfor %}
+    <button type="submit">SAVE</button>
+</form>
+<button onclick="getAddNewContent({{chapter.id}})">Add new Content</button>
+{% endblock content %}
+
+{% block script %}
+<script >
+    function getAddNewContent(chapterId) {
+        const getAddNewContentUrl = `/getAddContentOfChapter/id=${chapterId}/`;
+        newWindow = window.open(
+            getAddNewContentUrl,
+            'Add new content',
+            'width=1000,height=500,left=0,top=0',
+        )
+    }
+</script>
+{% endblock script %}

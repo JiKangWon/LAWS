@@ -6,10 +6,18 @@ class User(models.Model):
     # ! Fields
     username = models.CharField(max_length=30, unique=True, verbose_name='Tên đăng nhập')
     password = models.CharField(max_length=100, verbose_name='Mật khẩu')
+    balance = models.IntegerField(verbose_name="Balance", default=0, null=True, blank=True) 
 
     # ! Methods
     def __str__(self):
         return self.username
+    def getStartPassword(self):
+        return len(self.password)*'*'
+    
+class Fund(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+    value = models.IntegerField()
 
 class UserInfo(models.Model):
     # ! Fields
@@ -26,17 +34,6 @@ class UserInfo(models.Model):
     #! Method
     def __str__(self):
         return self.name
-
-class Balance(models.Model):
-    # ! Fields
-    value = models.FloatField(default=0, verbose_name='Số dư')
-    
-    # todo: Link field
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='balance', verbose_name='Tài khoản người dùng')
-
-    # ! Methods
-    def __str__(self):
-        return f"Số dư của {self.user.username}"
 
 class Term(models.Model):
     # ! Fields
@@ -64,7 +61,8 @@ class Class(models.Model):
     startDate = models.DateField(verbose_name='Thời gian mở lớp', null=True, auto_now_add=True)
     endDate = models.DateField(verbose_name='Thời gian đóng lớp', null=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='upcoming')
-
+    maxOfDay = models.IntegerField(verbose_name='Số lượng ngày học tối đa trong kỳ', default=50)
+    maxOfSessionsInDay = models.IntegerField(verbose_name="Số lượng buổi học tối đa trong ngày", default=2)
     # todo: Link fields
     term = models.ForeignKey(Term, on_delete=models.CASCADE, verbose_name='Thông tin kỳ học')
 
@@ -73,6 +71,18 @@ class Class(models.Model):
         return self.name
     def getSubjectList(self):
         return Subject.objects.filter(class_object = self)
+    def getDifferentStatus(self):
+        statuses = ['active', 'upcoming', 'completed']
+        statuses.remove(self.status)
+        return statuses
+    @property
+    def getDaysPathWay(self):
+        days = DayPathway.objects.filter(classObj = self)
+        return days
+    def getDayPathway(self, ordinal):
+        return DayPathway.objects.filter(classObj = self, ordinal=ordinal).first()
+    def isFull(self, ordinal):
+        return self.getDayPathway(ordinal).isFull()
 
 class Subject(models.Model):
     # ! Fields
@@ -105,6 +115,7 @@ class Shift(models.Model):
     name = models.CharField(max_length=50, verbose_name='Name of Shift ')
     startTime = models.DateTimeField(auto_now_add=True, verbose_name='Start time of Shift')
     endTime = models.DateTimeField(null=True, blank=True, verbose_name='End time of Shift')
+    status = models.BooleanField(default=False, verbose_name='Status')
 
     # todo: Link fields
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User of this Shift', null=True)
@@ -119,6 +130,10 @@ class Shift(models.Model):
     def get_number_of_sessions(self):
         sessions = Session.objects.filter(shift = self)
         return sessions.count()
+    
+    @property
+    def getSessions(self):
+        return Session.objects.filter(shift = self)
 
 class Chapter(models.Model):
     # ! Fields
@@ -161,6 +176,8 @@ class Session(models.Model):
     # todo: To String Methods
     def __str__(self):
         return f"Buổi học môn {self.subject.name}" if self.subject else f"Không xác định khóa học"
+    def getDate(self):
+        return self.startTime.date()
 
     # todo: format for start and end
     def getStart(self):
@@ -189,7 +206,7 @@ class ContentOfChapters(models.Model):
 
     # todo: To String Method
     def __str__(self):
-        return f"Nội dung {self.number}. {self.title}"
+        return f"{self.title}"
 
 class Document(models.Model):
 
@@ -207,30 +224,37 @@ class Document(models.Model):
     def __str__(self):
         return self.title
 
-class Transaction(models.Model):
+class TypeOfTransaction(models.Model):
+    # ! Fields:
+    name = models.CharField(max_length=50, verbose_name='Tên loại giao dịch')
+    maxValue = models.IntegerField(verbose_name="Hạn mức tối đa mỗi tháng")
+    month = models.IntegerField(default=1)
+    year = models.IntegerField(verbose_name='Năm', default=2025)
 
-    TYPE_CHOICES = (
-        ('monthly_income','monthly income'),
-        ('salary','salary'),
-        ('other_earnings','other earnings'),
-        ('food expenses','food expenses'),
-        ('transportation_expenses','Transportation expenses'),
-        ('entertainment_expenses','entertainment expenses'),
-        ('unexpected_expenses','unexpected expenses'),
-        ('monthly_rent','monthly rent'),
-        ('study_materials_expenses','Study materials Expenses'),
-    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+
+    def getValue(self, month, year):
+        transactions = Transaction.objects.filter(type=self, date__month = month, date__year = year)
+        totalValue = sum([transaction.value for transaction in transactions])
+        return totalValue
+    
+    @property
+    def getAbs(self):
+        return abs(self.maxValue)
+        
+
+
+class Transaction(models.Model):
 
     # ! Fields:
     
     date = models.DateField()
     title = models.CharField(max_length=200, verbose_name='Nội dung giao dịch')
     value = models.FloatField(verbose_name='Giá trị giao dịch')
-    type = models.CharField(max_length=50, choices=TYPE_CHOICES, verbose_name='Loại giao dịch', default='unexpected_expenses')
     
     # Todo: Link fields:
-    balance = models.ForeignKey(Balance, on_delete=models.CASCADE, verbose_name='Thông tin tài khoản người dùng')
-
+    type = models.ForeignKey(TypeOfTransaction, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(User, verbose_name="User", on_delete=models.CASCADE, null=True, blank=True)
     # ! Methods:
 
     # Todo: ToString method:
@@ -239,5 +263,61 @@ class Transaction(models.Model):
     
     # Todo: Get object methods:
     def getUser(self):
-        return self.balance.user
+        return self.user
 
+class DayPathway(models.Model):
+    # ! Fields:
+    ordinal = models.IntegerField(verbose_name='Số thứ tự ngày học')
+    
+    # Todo: Link fields:
+    classObj = models.ForeignKey(Class, on_delete=models.CASCADE, verbose_name='Thông tin lớp học')
+
+    # ! Methods:
+    def getSessions(self):
+        sessions = SessionPathway.objects.filter(day = self)
+        return sessions
+    
+    def count(self):
+        return len(self.getSessions())
+    
+    def isFull(self):
+        sessions = self.getSessions()
+        return len(sessions) == self.classObj.maxOfSessionsInDay
+
+    def getStatus(self):
+        sessions = self.getSessions()
+        for session in sessions:
+            if not session.status:
+                return False
+        return True
+
+    def __str__(self):
+        return  f'Day {self.ordinal}'
+
+    def getMaxDay(self):
+        return self.classObj.maxOfDay
+    
+    def getMaxSession(self):
+        return self.classObj.maxOfSessionsInDay
+    
+class SessionPathway(models.Model):
+    TYPE_CHOICES = (
+        ('learn','learn'),
+        ('review','review'),
+        ('practice','practice')
+    )
+        
+    # ! Fields:
+    ordinal = models.IntegerField(verbose_name='Số thứ tự của buổi học', default=0)
+    status = models.BooleanField(verbose_name="Trạng thái buổi học", default=False)
+    content = models.TextField(verbose_name="Content of Session")
+    type = models.CharField(max_length=10,choices=TYPE_CHOICES, default='learn')
+    iCode = models.CharField(max_length=10,verbose_name="Mã số session")
+    
+    # todo: link fields:
+    day = models.ForeignKey(DayPathway, verbose_name="Day of this session", on_delete=models.CASCADE)
+
+    # ! Methods:
+    def __str__(self):
+        return f'{self.content} (Buổi {self.ordinal})'
+    

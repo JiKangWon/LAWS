@@ -1,0 +1,41 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static "css/historyTransactions.css" %}" type="text/css">
+{% endblock style %}
+
+{% block title %}LAW
+{% endblock title %}
+
+{% block content %}
+{% for transaction in transactions %}
+<div class="TransactionContainer" id="transaction{{transaction.id}}"   >
+    <p > {{transaction.date | date:"d/m/Y"}} </p>
+    <h3 > {{transaction.title}} </h3>
+    <p > {{transaction.type.name}} </p>
+    <p > {{transaction.value}} </p>
+    <div class="ClickTag" onclick="delTransaction({{transaction.id}})">DELETE</div>
+</div>
+{% endfor %}
+{% endblock content %}
+
+{% block script %}
+<script >
+    async function delTransaction(transactionId){
+        const response = await fetch(`/finance/transaction/delete/id=${transactionId}/`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken(),
+            },
+        });
+        if (response.ok) {
+            const termContainer = document.getElementById(`transaction${transactionId}`);
+            if (termContainer) {
+                termContainer.remove();
+            }
+        }
+    }
+</script>
+{% endblock script %}

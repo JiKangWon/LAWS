@@ -1,0 +1,64 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block style %}
+<style >
+    .hiddenTag{
+        display: none;
+    }
+    .hiddenTag.active{
+        display: block;
+    }
+</style>
+{% endblock style %}
+
+{% block title %}
+LAW
+{% endblock title %}
+
+{% block content %}
+<h2 >ACCOUNT INFORMATION</h2>
+<div id="username">
+    <h3>Username:</h3>
+    <p>{{user.username}}</p>
+</div>
+<div id="password">
+    <h3>Password:</h3>
+    <p>{{user.getStartPassword}}</p>
+</div>
+<h2 >USER INFORMATION</h2>
+<div id="name">
+    <h3 >Name: </h3>
+    <p> {{userInfo.name}} </p>
+</div>
+<div id="email">
+    <h3 >Email</h3>
+    <p > {{userInfo.email}} </p>
+</div>
+<div id="phoneNumber">
+    <h3 >Phone number</h3>
+    <p > {{userInfo.phoneNumber}} </p>
+</div>
+<div id="address">
+    <h3 >Address</h3>
+    <p > {{userInfo.address}} </p>
+</div>
+<div id="dob">
+    <h3 >Date of birth</h3>
+    <p > {{userInfo.dob}} </p>
+</div>
+<div id="school">
+    <h3 >School</h3>
+    <p > {{userInfo.school}} </p>
+</div>
+<h2 >TERMS INFORMATION</h2>
+{% for term in terms %}
+<a href="{% url "manageTerm" termId=term.id %}"> {{term.name}} </a>
+{% endfor %}
+<a href="{% url "editUserInformation" userId=user.id %}"> EDIT </a>
+{% endblock content %}
+
+{% block script %}
+<script >
+</script>
+{% endblock script %}

@@ -1,0 +1,71 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static "css/editUserInformation.css" %}">
+{% endblock style %}
+
+{% block title %}LAW
+{% endblock title %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <h2 >USER INFORMATION</h2>
+    <div class="name">
+        <label for="name" >
+            Name: 
+        <input type="text" name="name" id ="name" value="{{userInfo.name}}" >
+        </label>
+    </div>
+    <div class="email">
+        <label for="email" >
+            Email
+        <input type="text" name="email" id ="email" value="{{userInfo.email}}" >
+        </label>
+    </div>
+    <div class="phoneNumber">
+        <label for="phoneNumber" >
+            Phone number
+        <input type="text" name="phoneNumber" id ="phoneNumber" value="{{userInfo.phoneNumber}}" >
+        </label>
+    </div>
+    <div class="address">
+        <label for="address" >
+            Address
+        <input type="text" name="address" id ="address" value="{{userInfo.address}}" >
+        </label>
+    </div>
+    <div class="dob">
+        <label for="dob" >
+            Date of birth
+        <input type="date" name="dob" id ="dob" value="{{userInfo.dob | date:'Y-m-d' }}" >
+        </label>
+    </div>
+    <div class="school">
+        <label for="school" >
+            School
+        <input type="text" name="school" id ="school" value="{{userInfo.school}}" >
+        </label>
+    </div>
+    <h2 >TERMS INFORMATION</h2>
+    {% for term in terms %}
+    <div id="termId{{term.id}}" > 
+        <p >Term: {{term.name}} </p>
+        <div onclick="delTerm({{term.id}})"> Delete </div>
+    </div>
+    {% endfor %}
+    <div onclick="createNewTerm({{user.id}})">
+        Add
+    </div>
+    <hr>
+    <button type="submit">SAVE</button>
+</form>
+{% endblock content %}
+
+{% block script %}
+<script src="{% static "js/editUserInformation.js" %}"></script>
+<script >
+
+</script>
+{% endblock script %}

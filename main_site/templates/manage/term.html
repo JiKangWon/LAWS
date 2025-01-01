@@ -1,0 +1,37 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block style %}
+
+{% endblock style %}
+
+{% block title %}LAW{% endblock title %}
+
+{% block content %}
+<div class="InformationContainer">
+    <h3>Name</h3>
+    <p> {{term.name}} </p>
+</div>
+<div class="InformationContainer">
+    <h3>Start date</h3>
+    <p> {{term.startDate}} </p>
+</div>
+<div class="InformationContainer">
+    <h3>End date</h3>
+    <p> {{term.endDate}} </p>
+</div>
+<div class="InformationContainer">
+    <h3> Total of Months</h3>
+    <p> {{term.totalOfMonths}} </p>
+</div>
+<h2 >INFORMATION OF CLASS IN THIS TERM</h2>
+{% for class in classes %}
+<div class="InformationContainer">
+    <a href="{% url "manageClass" classId=class.id %}" > <p >{{forloop.counter}}. {{class.name}} </p></a>
+</div>
+{% endfor %}
+<a href="{% url "editTerm" termId=term.id %}" ><div class="ClickTag">EDIT</div></a>
+{% endblock content %}
+
+{% block script %}
+
+{% endblock script %}

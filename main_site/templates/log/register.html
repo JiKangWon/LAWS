@@ -1,9 +1,68 @@
 {% extends "base/base.html" %}
+{% load static %}
 
-{% block style %}{% endblock style %}
+{% block style %}
+{% endblock style %}
 
-{% block title %}{% endblock title %}
+{% block title %}
 
-{% block content %}{% endblock content %}
+{% endblock title %}
 
-{% block script %}{% endblock script %}
+{% block content %}
+<form method="POST" onsubmit="return validateForm(event);">
+    {% csrf_token %}
+    <label for="username">
+        Username:
+        <input type="text" id="username" name="username" required>
+    </label>
+    
+    <label for="password">
+        Password:
+        <input type="password" id="password" name="password" required>
+    </label>
+    <label for="confirmPassword">
+        Confirm Password:
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+    </label>
+    <label for="name">
+        Name:
+        <input type="text" id="name" name="name" required>
+    </label>
+    <label for="email">
+        Email:
+        <input type="email" id="email" name="email" required>
+    </label>
+    <label for="phoneNumber">
+        Phone number:
+        <input type="tel" id="phoneNumber" name="phoneNumber" required>
+    </label>
+    <label for="address">
+        Address:
+        <input type="text" id="address" name="address" required>
+    </label>
+    <label for="dob">
+        Date of birth:
+        <input type="date" id="dob" name="dob" required>
+    </label>
+    <label for="school">
+        School:
+        <input type="text" id="school" name="school" required>
+    </label>
+    <button type="submit">Register</button>
+</form>
+{% endblock content %}
+
+{% block script %}
+<script >
+    function validateForm(event) {
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("confirmPassword").value;
+        
+        if (password!== confirmPassword) {
+            alert("Passwords do not match.");
+            return false;
+        }
+        return true;
+    }
+</script>
+{% endblock script %}

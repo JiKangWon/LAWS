@@ -1,0 +1,66 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block style %}
+{% endblock style %}
+
+{% block title %}LAW
+{% endblock title %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <label for="name">
+        Name:
+        <input type="text" id="name" name="name" value="{{subject.name}}" required>
+    </label>
+    <div onclick="createNewChapter({{subject.id}})">Add new chapter</div>
+    {% for item in chapter_with_contents %}
+    <div class="ChapterContainer">
+        <h3 > Chapter{{item.chapter.number}}. {{item.chapter.title}}</h3>
+        <div onclick="editChapter({{item.chapter.id}})">VIEW</div>
+        {% for content in item.contents %}
+        <div class="ContentContainer">
+            <h4 > {{forloop.counter}}. {{content.title}} </h4>
+            <p > {{content.content}} </p>
+            {% if content.link %}
+            <a href="{{content.link}}">Tutorial link</a>        
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    <button type="submit">SAVE</button>
+</form>
+{% endblock content %}
+
+{% block script %}
+<script >
+    function editChapter(chapterId) {
+        const editChapterWindow = window.open(
+            `/getContentOfChapters/id=${chapterId}/`,
+            'Edit chapter',
+            'width=1000,height=500,left=0,top=0',
+        )
+        let interval = setInterval(function () {
+            if (editChapterWindow.closed) {
+                clearInterval(interval); // Dừng kiểm tra khi cửa s�� bị đóng
+                location.reload();
+            }
+        }, 1000); // Kiểm tra m��i giây
+    }
+    function createNewChapter(subjectId) {
+        const createChapterWindow = window.open(
+            `/models/chapters/create/id=${subjectId}/`,
+            'Create new chapter',
+            'width=1000,height=500,left=0,top=0',
+        )
+        let interval = setInterval(function () {
+            if (createChapterWindow.closed) {
+                clearInterval(interval); // Dừng kiểm tra khi cửa sổ bị đóng
+                location.reload();
+            }
+        }, 1000); // Kiểm tra mỗi giây
+    }
+</script>
+{% endblock script %}

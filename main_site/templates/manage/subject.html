@@ -1,0 +1,28 @@
+{% extends "base/base.html" %}
+
+{% block style %}{% endblock style %}
+
+{% block title %}LAW{% endblock title %}
+
+{% block content %}
+<h1 >Subject: {{subject.name}} </h1>
+{% for item in chapter_with_contents %}
+<div class="ChapterContainer">
+    <h3 > Chapter {{item.chapter.number}}. {{item.chapter.title}}  </h3>
+    {% for content in item.contents %}
+    <div class="ContentContainer">
+        <h4 > {{forloop.counter}}. {{content.title}} </h4>
+        <p > {{content.content}} </p>
+        {% if content.link %}
+        <a href="{{content.link}}">Tutorial link</a>        
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endfor %}
+<a href="{% url "editSubject" subjectId=subject.id %}"><div class="ClickTag">EDIT</div></a>
+{% endblock content %}
+
+{% block script %}
+
+{% endblock script %}
