@@ -1,4 +1,5 @@
 .ClickTag,
+a,
 [onclick]{
     background-color: azure;
     display: inline-block;
@@ -6,6 +7,7 @@
     border-radius: 3px;
 }
 .ClickTag:hover,
+a:hover,
 [onclick]:hover{
     background-color: lightgray;
     cursor: pointer;

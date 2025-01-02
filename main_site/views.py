@@ -45,11 +45,11 @@ def get_todolist(request, id):
     return render(request, 'page/todolist.html', context)
 
 # ! GET OPEN SHIFT PAGE AND CREATE NEW SHIFT:
-def getOpenShift(request, id):
+def getOpenShift(request, id, number):
     user = User.objects.filter(id=id).first()
     term = Term.objects.filter(user=user).first()
     classes = Class.objects.filter(term=term)
-    numberRange = range(1,5)
+    numberRange = range(1,number+1)
     context = {
         'user':user,
         'numberRange':numberRange,
@@ -121,7 +121,8 @@ def get_close_shift(request, id):
     sessions = Session.objects.filter(shift=shift)
     context = {
         'user':user,
-        'user_inf': user_inf,   
+        'user_inf': user_inf, 
+        'now':timezone.now(),  
         'term':term,
         'shift':shift,
         'sessions':sessions,
@@ -1117,3 +1118,102 @@ def getChangePassword(request, userId):
         return getHome(request)
     return render(request, 'log/changePassword.html', {'user':user})
 
+# ! DIARY MANAGEMENT:
+def getDiary(request, userId):
+    user = User.objects.filter(id=userId).first()
+    userInfo = UserInfo.objects.filter(user=user).first()
+    diaries = Diary.objects.filter(user=user).order_by('-date')
+    context = {
+        'user':user,
+        'userInfo':userInfo,
+        'diaries': diaries,
+    }
+    return render(request, 'page/diary.html', context)
+def createDiary(request, userId):
+    user = User.objects.filter(id=userId).first()
+    context = {
+        'user': user,
+    }
+    if request.method == "POST":
+        postTitle = request.POST.get('title')
+        postContent = request.POST.get('content')
+        diary = Diary.objects.create(
+            user = user,
+            title = postTitle,
+            content = postContent,
+        )
+        script = """
+            <script >
+                window.close();
+            </script>
+        """
+        return HttpResponse(script)
+    return render(request, 'create/diary.html', context)
+def deleteDiary(request, diaryId):
+    if request.method == 'DELETE':
+        diary = Diary.objects.filter(id=diaryId).first()
+        if diary:
+            diary.delete()
+            return HttpResponse(status=204)
+        return HttpResponse(status=404)
+def editDiary(request, diaryId):
+    diary = Diary.objects.filter(id=diaryId).first()
+    context = {
+        'user': diary.user,
+        'diary': diary,
+    }
+    if request.method == "POST":
+        postTitle = request.POST.get('title')
+        postContent = request.POST.get('content')
+        diary.title = postTitle
+        diary.content = postContent
+        diary.save()
+        script = """
+            <script >
+                window.close();
+            </script>
+        """
+        return HttpResponse(script)
+    return render(request, 'edit/diary.html', context)
+
+# ! DEADLINE MANAGEMENT:
+def getDeadline(request, userId):        
+    user = User.objects.filter(id=userId).first()
+    deadlines = Deadline.objects.filter(user=user)
+    context = {
+        'user': user,
+        'deadlines':deadlines,
+    }
+    return render(request, 'page/deadline.html', context)
+
+def delDeadline(request, deadlineId):
+    if request.method == 'DELETE':
+        deadline = Deadline.objects.filter(id=deadlineId).first()
+        if deadline:
+            deadline.delete()
+            return HttpResponse(status=204)
+        return HttpResponse(status=404)
+    
+
+def createDeadline(request, userId):
+    user = User.objects.filter(id=userId).first()
+    context = {
+        'user':user,
+    }
+    if request.method == "POST":
+        postContent = request.POST.get('content')
+        postDate = request.POST.get('date')
+        deadline = Deadline.objects.create(
+            user = user,
+            content = postContent,
+            date = datetime.fromisoformat(postDate),
+        )
+        script = """
+            <script >
+                window.close();
+            </script>
+        """
+        return HttpResponse(script)
+    return render(request, 'create/deadline.html', context)
+    
+    

@@ -1,0 +1,26 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static "css/diary.css" %}" type="text/css">
+{% endblock style %}
+
+{% block title %}LAW{% endblock title %}
+
+{% block content %}
+<h1 > {{userInfo.name}}'s diary </h1>
+<div class="ClickTag" onclick="createDiary({{user.id}})">ADD</div>
+{% for diary in diaries %}
+<div class="DiaryContainer" id="diary{{diary.id}}">
+    <p > {{diary.date | date:"d/m/Y"}} </p>
+    <h3 > {{diary.title}} </h3>
+    <p > {{diary.content}} </p>
+    <div class="ClickTag" onclick="deleteDiary({{diary.id}})">DELETE</div>
+    <div class="ClickTag" onclick="editDiary({{diary.id}})">EDIT</div>
+</div>
+{% endfor %}
+{% endblock content %}
+
+{% block script %}
+<script src="{% static "js/diary.js" %}"></script>
+{% endblock script %}

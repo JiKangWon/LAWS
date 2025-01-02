@@ -1,0 +1,24 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block style %}
+{% endblock style %}
+
+{% block title %}LAW{% endblock title %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <label for="content">
+        Content: 
+        <textarea id="content" name="content" rows="4" cols="50" required></textarea>
+    </label>
+    <label for="date">
+        Deadline: 
+        <input type="datetime-local" id="date" name="date" required>
+    </label>
+    <button type="submit">ADD</button>
+</form>
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}

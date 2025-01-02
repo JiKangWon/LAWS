@@ -1,16 +1,18 @@
 {% extends "base/base.html" %}
-
+{% load static %}
 {% block style %}{% endblock style %}
 
 {% block title %}{% endblock title %}
 
 {% block content %}
-    <a href="{% url 'open_shift' id=user.id %}">Open shift</a>
+    <div class="ClickTag" onclick="openShift({{user.id}})">Open shift</div>
     <a href="{% url 'close_shift' id=user.id %}">Close shift</a>
     <a href="{% url "todolist" id=user.id %}">Shift information</a>
     <a href="{% url "userInformation" userId=user.id %}">User information</a>
     <a href="{% url "finance" userId=user.id month=now.month year=now.year %}">FINANCE MANAGEMENT</a>
     <a href="{% url "changePassword" userId=user.id %}">Change password</a>
+    <a href="{% url "deadline" userId=user.id %}">DEADLINE</a>
+    <a href="{% url "diary" userId=user.id %}">DIARY</a>
     <a href="{% url "home" %}">SIGNOUT</a>
 
     <h1>Home</h1>
@@ -22,4 +24,6 @@
     {% endcomment %}
 {% endblock content %}
 
-{% block script %}{% endblock script %}
+{% block script %}
+<script src="{% static "js/home.js" %}"></script>
+{% endblock script %}

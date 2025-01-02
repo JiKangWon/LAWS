@@ -1,0 +1,24 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static "css/deadline.css" %}" type="text/css">
+{% endblock style %}
+
+{% block title %}LAW
+{% endblock title %}
+
+{% block content %}
+<h1 > DEADLINE LIST</h1>
+<div class="ClickTag" onclick="createDeadline({{user.id}})">ADD</div>
+{% for deadline in deadlines %}
+<div class="DeadlineContainer" id="deadline{{deadline.id}}">
+    <p > {{deadline.content}} </p>
+    <p > {{deadline.date | date:"d/m/Y"}} </p>
+    <div class="ClickTag" onclick="delDeadline({{deadline.id}})">FINISHED</div>
+</div>
+{% endfor %}
+{% endblock content %}
+
+{% block script %}
+<script src="{% static "js/deadline.js" %}"></script>
+{% endblock script %}

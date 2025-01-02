@@ -26,7 +26,7 @@ urlpatterns = [
     path('register/', views.getRegister, name='register'),
     path('changePassword/id=<int:userId>/', views.getChangePassword, name='changePassword'),
     path('todo/id=<int:id>/', views.get_todolist, name='todolist'),
-    path('todo/open/id=<int:id>/', views.getOpenShift, name='open_shift'),
+    path('todo/open/id=<int:id>/number=<int:number>/', views.getOpenShift, name='open_shift'),
     path('todo/close/id=<int:id>/', views.get_close_shift, name='close_shift'),
     path('models/chapters/create/id=<int:subjectId>/', views.getCreateChapter, name='createChapter'),
     path('getChapters/', views.getChapters, name='getChapters'),
@@ -74,6 +74,15 @@ urlpatterns = [
     path('finance/type/edit/out/id=<int:typeId>/', views.getEditTypeOut, name='editTypeOut'),
     path('finance/fund/create/id=<int:userId>/', views.createFund, name="createFund"),
     path('finance/fund/update/id=<int:userId>/', views.updateFunds, name="updateFunds"),
+    # ! DIARY MANAGEMENT:
+    path('diary/id=<int:userId>/', views.getDiary, name="diary"),
+    path('diary/create/id=<int:userId>/', views.createDiary, name="createDiary"),
+    path('diary/delete/id=<int:diaryId>/', views.deleteDiary, name="deleteDiary"),
+    path('diary/edit/id=<int:diaryId>/', views.editDiary, name="editDiary"),
+    # ! DEADLINE MANAGEMENT:
+    path('deadline/id=<int:userId>/', views.getDeadline, name="deadline"),
+    path('deadline/create/id=<int:userId>/', views.createDeadline, name="createDeadline"),
+    path('deadline/delete/id=<int:deadlineId>/', views.delDeadline, name="deleteDeadline"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -14,6 +14,18 @@ class User(models.Model):
     def getStartPassword(self):
         return len(self.password)*'*'
     
+class Diary(models.Model):
+    title = models.CharField(max_length=500)
+    content = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Deadline(models.Model):
+    content = models.TextField()
+    date = models.DateTimeField(null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
 class Fund(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
