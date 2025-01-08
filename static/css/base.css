@@ -1,14 +1,11 @@
-.ClickTag,
-a,
-[onclick]{
-    background-color: azure;
-    display: inline-block;
-    border: 1px solid black;
-    border-radius: 3px;
-}
 .ClickTag:hover,
-a:hover,
 [onclick]:hover{
-    background-color: lightgray;
     cursor: pointer;
+}
+.DataFrame{
+    border: 1px solid #7f0bde;
+    border-radius: 10px;
+}
+a{
+    text-decoration: none !important;
 }

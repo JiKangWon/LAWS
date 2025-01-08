@@ -1,0 +1,66 @@
+.ClickTag{
+    background-color: #7f0bde;
+    border: 1px solid #7f0bde;
+    border-radius: 10px;
+    width: 120px;
+    height: 40px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.DataFrame{
+    padding: 20px;
+    margin: 20px;
+    width: 35vw;
+    background-color: rgba(60, 2, 89, 0.5);
+}
+label{
+    display: block;
+}
+a{
+    color:#3c0259;
+    font-weight: bold;
+}
+.RegisterContainer{
+    color: white;
+}
+.LoginButton{
+    background-color: #600b87;
+    border: 1px solid #600b87;
+    border-radius: 10px;
+    width: 150px;
+    height: 50px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+    text-align: center;
+}
+.LoginButton:hover{
+    background-color: #580a7a;
+    cursor: pointer;
+}
+.ButtonContainer{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+body{
+    background-image: url(../images/background3.jpeg);
+    background-size: 100%, 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+h1{
+    color: white;
+    font-size: 60px;
+    text-align: center;
+}
+label{
+    color: white;
+    font-size: 15px;
+}

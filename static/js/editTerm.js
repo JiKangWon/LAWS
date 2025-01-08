@@ -12,6 +12,11 @@ function createNewClass(termId){
     }, 1000); // Kiểm tra mỗi giây
 }
 async function delClass(classId) {
+    // Xác nhận yêu cầu xóa
+    const confirmDelete = confirm(`Do you want to delete this class?`);
+    if (!confirmDelete) {
+        return;
+    }
     try {
         // Gửi yêu cầu xóa đến server
         const response = await fetch(`/delClass/id=${classId}/`, {

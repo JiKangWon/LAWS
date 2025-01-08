@@ -1,0 +1,125 @@
+input,
+select{
+    color: #600b87;
+    font-size: 20px;
+    display: inline-block;
+    border: 3px solid #b059eb;
+    border-radius: 30px;
+    width: 300px;
+    height: 50px;
+    margin: 0;
+    margin-left: 30px;
+}
+textarea{
+    color: #600b87;
+    font-size: 20px;
+    display: inline-block;
+    border: 3px solid #b059eb;
+    border-radius: 30px;
+    width: 500px;
+    height: 200px;
+    margin: 0;
+    margin-left: 30px;
+}
+/* !BODY */
+body{
+    overflow-x: hidden;
+}
+.MainContainer{
+    width: 97vw;
+    margin: 10px auto;
+    padding: 15px;
+    border: 3px solid #600b87;
+    border-radius: 30px;
+    height: 94vh;
+    overflow-y: scroll;
+}
+/* !LABEL */
+label{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.LabelContainer{
+    display: inline-block;
+    background-color: #b059eb;
+    font-size: 20px;
+    margin: 0;
+    margin-left: 100px;
+    width: 200px;
+    margin-right: 30px;
+}
+/* !BUTTON */
+button{
+    background-color: #b059eb;
+    color: white;
+    border-radius: 30px;
+    height: 50px;
+    width: 200px;
+    font-size: 20px;
+}
+button:hover{
+    background-color: #600b87;
+    cursor: pointer;
+    transform: scale(1.05 );
+}
+div.SubmitButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* !INPUT ELEMENT */
+.InputElement{
+    margin:20px;
+}
+/* !TITLE OF PAGE */
+h1{
+    text-align: center;
+    font-size: 40px;
+    color: #600b87;
+    text-transform: uppercase;
+}
+h2{
+    display: inline;
+    color: white;
+    background-color: #600b87;
+    margin: 20px;
+}
+/* ! ICON FOR EDIT PAGE */
+.IconForEditPage{
+    width: 90%;
+    height: 90%;
+}
+/* ! ADD, DELETE BUTTON  */
+.AddIcon,
+.DeleteIcon{
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    display: block;
+}
+.AddIcon{
+    margin: 20px;
+}
+.AddIcon:hover,
+.DeleteIcon:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+}
+/* !CHILD MODEL CONTAINER */
+.ChildModelContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border: 3px solid #600b87;
+    border-radius: 10px;
+    margin: 20px;
+}
+.ChildModelContainer:hover{
+    background-color: #b059eb;
+}
+.ChildModelName{
+    font-size: 20px;
+    color: #600b87;
+}
