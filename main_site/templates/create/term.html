@@ -2,39 +2,52 @@
 {% load static %}
 
 {% block style %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>  
+<link rel="stylesheet" href="{% static "css/create.css" %}" type="text/css">
 {% endblock style %}
 
 {% block title %}LAW{% endblock title %}
 
 {% block content %}
-<form method="POST">
-    {% csrf_token %}
-    <div class="NameContainer">
-        <label for="name">
-            Name:
-            <input name="name" id="name" placeholder="Enter name of your term" required>
-        </label>
-    </div>
-    <div class="StartDateContainer">
-        <label for="startDate">
-            Start Date:
-            <input type="date" id="startDate" name="startDate" required>
-        </label>
-    </div>
-    <div class="EndDateContainer">
-        <label for="endDate">
-            End Date:
-            <input type="date" id="endDate" name="endDate" required>
-        </label>
-    </div>
-    <div class="totalOfMonthContainer">
-        <label for="totalOfMonth">
-            Total of Month:
-            <input type="number" id="totalOfMonth" name="totalOfMonth" required>
-        </label>
-    </div>
-    <button >SAVE</button>
-</form>
+<div class="MainContainer">
+    <h1 >Create new term of {{userInfo.name}}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-8">
+                <div class="NameContainer InputElement">
+                    <label for="name">
+                        <div class="LabelContainer">Name:</div>
+                        <input name="name" id="name" placeholder="Enter name of your term" required>
+                    </label>
+                </div>
+                <div class="StartDateContainer InputElement">
+                    <label for="startDate">
+                        <div class="LabelContainer">Start Date:</div>
+                        <input type="date" id="startDate" name="startDate" required>
+                    </label>
+                </div>
+                <div class="EndDateContainer InputElement">
+                    <label for="endDate">
+                        <div class="LabelContainer">End Date:</div>
+                        <input type="date" id="endDate" name="endDate" required>
+                    </label>
+                </div>
+                <div class="totalOfMonthContainer InputElement">
+                    <label for="totalOfMonth">
+                        <div class="LabelContainer">Total of Month:</div>
+                        <input type="number" id="totalOfMonth" name="totalOfMonth" required>
+                    </label>
+                </div>
+            </div>
+            <div class="col-4">
+                <img src="{% static "images/MagicIcon3.png" %}" alt="Icon for create page" class="IconForEditPage">
+            </div>
+        </div>
+       <div class="SubmitButton"> <button >SAVE</button></div>
+    </form>
+</div>
 {% endblock content %}
 
 {% block script %}

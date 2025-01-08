@@ -13,6 +13,9 @@ class User(models.Model):
         return self.username
     def getStartPassword(self):
         return len(self.password)*'*'
+    def getUserInfo(self):
+        userInfo = UserInfo.objects.filter(user = self)
+        return userInfo
     
 class Diary(models.Model):
     title = models.CharField(max_length=500)
