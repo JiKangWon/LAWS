@@ -858,7 +858,7 @@ def getCreateTypeNeg(request, userId, month, year):
             </script>
         """
         return HttpResponse(script)
-    return render(request, 'finance/createTypePos.html')
+    return render(request, 'finance/createTypeNeg.html')
 
 def getCreateTransaction(request, userId):
     user = User.objects.filter(id = userId).first()
@@ -1216,4 +1216,11 @@ def createDeadline(request, userId):
         return HttpResponse(script)
     return render(request, 'create/deadline.html', context)
     
-    
+def delChapter(request, chapterId):
+    if request.method == 'DELETE':
+        chapter = Chapter.objects.filter(id=chapterId).first()
+        if chapter:
+            chapter.delete()
+            return HttpResponse(status=204)
+        return HttpResponse(status=404)
+        

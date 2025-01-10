@@ -1,0 +1,164 @@
+body{
+    background-color: #f0f0f0;
+    overflow-x: hidden;
+}
+#MainContainer{
+    margin: 0 auto;
+    width: 97%;
+    background-color: #ffffff;
+
+}
+/* ! NAVBAR */
+#navbar{
+    background-color: #ffffff;
+    position: fixed;          
+    top: 0;                   
+    left: 0;
+    width: 100vw;
+}
+.nav-block{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.nav-item{
+    margin-right: 30px;
+}
+.LogoContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+img.Logo{
+    width: 60px;
+    height: 60px;
+}
+img.Logo:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+.LogoText{
+    font-size: 25px;
+    font-weight: bolder;
+}
+/* ! HEADER */
+#Header{
+    margin-top: 70px;
+    padding: 20px;
+}
+.HeaderText{
+    font-size: 200px;
+    font-weight: bold;
+    text-align: center;
+}
+.MonthContainer{
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 2px;
+}
+.HeaderDescription{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.FinanceIcon{
+    width: 30px;
+    height: 30px;
+}
+.DescriptionText{
+    font-size: 20px;
+    font-weight: bold;
+}
+/* ! MAIN FUNCTION */
+#MainFunction{
+    background-color: black;
+    width: 100%;
+    margin: 20px auto;
+    padding: 50px 0;
+    padding-bottom: 150px;
+}
+.MainFunction-Title{
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid black;
+}
+.MainFunction-Container{
+    background-color: #ffffff;
+    margin: 20px;
+    border-radius: 20px;
+}
+.AddIcon{
+    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    margin: 10px 0;
+}
+.AddIcon:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+}
+/* ! DIFFERENT FUNCTION */
+#Function{
+    background-color: #ffffff;
+    width: 60%;
+    margin: 20px auto;
+    margin-top: -150px;
+    border: 1px solid black;
+}
+.FunctionItem{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    width: 100%;
+    height: 250px;
+    box-sizing: border-box;
+}
+.FunctionItem:hover{
+    background-color: black;
+    cursor: pointer;
+    color: #ffffff;
+}
+.FunctionLogo{
+    width: 50px;
+    height: 50px;
+}
+.FunctionTitle{
+    font-size: 18px;
+    font-weight: bold;
+}
+.BetweenItem{
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+/* ! GIAO DIỆN KHOẢN THU */
+#In{
+    background-color: #ffffff;
+    width: 100%;
+    margin: 20px auto;
+}
+h2.ContainerTitle{
+    margin: 20px;
+    display: inline;
+    background-color: black;
+    color: #ffffff;
+}
+h3.FundTitle{
+    margin: 20px;
+    border-bottom: 1px solid #ffffff;
+}
+.FundContainer{
+    background-color: black;
+    color: #ffffff;
+    display: inline-block;
+    width: 20%;
+    height: 200px;
+    border-radius: 10px;
+    margin: 20px;
+}
+
+/* !GIAO DIỆN KHOẢN CHI */

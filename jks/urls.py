@@ -50,6 +50,7 @@ urlpatterns = [
     path('delClass/id=<int:classId>/', views.delClass, name="delClass"),
     path('delSubject/id=<int:subjectId>/', views.delSubject, name="delSubject"),
     path('delSessions/id=<int:sessionId>/', views.delSessions, name="delSession"),
+    path('delChapter/id=<int:chapterId>/', views.delChapter, name="delChapter"),
     # ! CREATE MODELS:
     path('create/term/id=<int:userId>/', views.getCreateTerm, name="createTerm"),
     path('create/class/id=<int:termId>/', views.getCreateClass, name="createClass"),
