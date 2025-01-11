@@ -14,13 +14,13 @@
 
 <div id="navbar" class="row">
     <div class="col-auto LogoContainer">
-        <img class="Logo" src="{% static "images/Home2.png" %}" alt="Logo">
+        <a href="{% url "home" %}"><img class="Logo" src="{% static "images/Home2.png" %}" alt="Logo" onclick="GoHome()"></a>
         <span class="LogoText">HOME</span>
     </div>
     <div class="col nav-block">
         <ul class="nav">
-            <li class="nav-item">DIARY</li>
-            <li class="nav-item">DEADLINE</li>
+            <li class="nav-item" onclick="OpenDiary({{user.id}})">DIARY</li>
+            <li class="nav-item" onclick="OpenDeadline({{user.id}})">DEADLINE</li>
         </ul>
     </div>
 </div>
@@ -51,8 +51,8 @@
                 <div class="col"> {{fund.value}} </div>
             </div>
             {% endfor %}
-            <img class="AddIcon" src="{% static "images/Add2.jpg" %}" />
-            <img class="AddIcon" src="{% static "images/update1.jpg" %}" />
+            <img class="AddIcon" src="{% static "images/Add2.jpg" %}" onclick="createFund({{user.id}})"/>
+            <img class="AddIcon" src="{% static "images/update1.jpg" %}" onclick="updateFunds({{user.id}})" />
         </div>
         <div id="Difference" class="col MainFunction-Container">
             <h2 class="MainFunction-Title" >BALANCE DIFFERENCE</h2>
@@ -65,82 +65,88 @@
     {% comment %} ! DIFFERENT FUNCTION {% endcomment %}
     <div id="Function">
         <div class="row">
-            <div class="col FunctionItem">
+            <div class="col FunctionItem" onclick="AndNewTransaction({{user.id}})">
                 <img class="FunctionLogo" src="{% static "images/Transaction1.png" %}" />
                 <div class="FunctionTitle">NEW TRANSACTION</div>
             </div>
-            <div class="col FunctionItem BetweenItem">
-                <img class="FunctionLogo" src="{% static "images/Report1.png" %}" />
-                <div class="FunctionTitle">REPORT TRANSACTIONS</div>
+            <div class="col">
+                <a href="{% url "reportOfTransaction" userId=user.id month=month year=year %}" >
+                    <div class="FunctionItem BetweenItem">
+                        <img class="FunctionLogo" src="{% static "images/Report1.png" %}" />
+                        <div class="FunctionTitle">REPORT TRANSACTIONS</div>
+                    </div>
+                </a>
             </div>
-            <div class="col FunctionItem">
-                <img class="FunctionLogo" src="{% static "images/History.png" %}" />
-                <div class="FunctionTitle">HISTORY</div>
+            <div class="col">
+                <a href="{% url "historyOfTransaction" userId=user.id %}">
+                    <div class="FunctionItem">
+                        <img class="FunctionLogo" src="{% static "images/History.png" %}" />
+                        <div class="FunctionTitle">HISTORY</div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
     
     <div id="In">
-        <h2 class="ContainerTitle">
-            REVENUE
-        </h2>
+        <div class="TitleFrame">
+            <h2 class="ContainerTitle">
+                REVENUE
+            </h2>
+            <img src="{% static "images/Add2.jpg" %}" class="ButtonIcon" onclick="createNewTypePos({{user.id}}, {{month}}, {{year}})" />
+        </div>
         <br>
-        <div class="FundContainer">
-            <h3 class="FundTitle">Previous Month</h3>
-            <p class="FundValue"> {{prev_balance}} </p>
+        <div class="RevenueContainer">
+            <div class="FundContainer">
+                <h3 class="FundTitle">Previous Month</h3>
+                <div class="row RevenueItem">
+                    <div class="col">Total:</div>
+                    <div class="col RevenueValue">{{prev_balance}}</div>
+                </div>
+            </div>
+            {% for type in income_types %}
+            <div id="type{{type.income_type.id}}" class="FundContainer">
+                <h3 class="FundTitle">{{type.income_type.name}}</h3>
+                <div class="row RevenueItem">
+                    <div class="col">Average income:</div>
+                    <div class="col RevenueValue">{{type.income_type.maxValue}}</div>
+                </div>
+                <div class="row RevenueItem">
+                    <div class="col">Amount collected:</div>
+                    <div class="col RevenueValue"> {{type.value}} </div>
+                </div>
+                <img class="ButtonIcon" alt="" src="{% static "images/Edit2.jpg" %}" onclick="editTypeIn({{type.income_type.id}})">
+                <img class="ButtonIcon" alt="" src="{% static "images/Delete4.jpg" %}" onclick="deleteType({{type.income_type.id}})">
+            </div>
+            {% endfor %}
         </div>
     </div>
     
     <div id="Out">
-    
-    </div>
-</div>
-{% comment %} ! NON CSS {% endcomment %}
-<div class="BalanceContainer">
-    <div class="UserInformation">
-        User: {{userInfo.name}}
-    </div>
-    <p >SỐ DƯ THEO LÝ THUYẾT: {{user.balance}} </p>
-</div>
-<h2 >SỐ DƯ THỰC TẾ</h2>
-{% for fund in funds %}
-    <p > {{fund.name}}: {{fund.value}} </p>
-{% endfor %}
-<div class="ClickTag" onclick="createFund({{user.id}})"> + thêm quỹ</div>
-<div class="ClickTag" onclick="updateFunds({{user.id}})">CẬP NHẬT SỐ DƯ THỰC</div>
-<h4 >Mức chênh lệch: {{deltaBalance}} </h4>
-<div onclick="AndNewTransaction({{user.id}})">+ New Transaction</div>
-<a href="{% url "historyOfTransaction" userId=user.id %}" >History of your transactions</a>
-<a href="{% url "reportOfTransaction" userId=user.id month=month year=year %}">Report this month</a>
-<h2 >THÔNG TIN CÁC KHOẢN THU CHI</h2>
-<div class="row">
-    <div class="col">
-        <h2 >KHOẢN THU</h2>
-        <div onclick="createNewTypePos({{user.id}}, {{month}}, {{year}})">Thêm khoản thu</div>
-        <h3 > Nhập số dư tháng trước</h3>
-        <p >Số dư: {{prev_balance}} </p>
-        {% for type in income_types%}
-        <div id="type{{type.income_type.id}}">
-            <h3 > {{forloop.counter}}. {{type.income_type.name}} </h3>
-            <p > Trung bình mỗi tháng: {{type.income_type.maxValue}} </p>
-            <p > Đã thu: {{type.value}} </p>
-            <div class="ClickTag " onclick="editTypeIn({{type.income_type.id}})">EDIT</div>
-            <div class="ClickTag " onclick="deleteType({{type.income_type.id}})">DELETE</div>
+        <div class="TitleFrame">
+            <h2 class="ContainerTitle Expense">
+                EXPENSE
+            </h2>
+            <img class="ButtonIcon" src="{% static "images/Add3.jpg" %}" onclick="createNewTypeNeg({{user.id}}, {{month}}, {{year}})" />
         </div>
-        {% endfor %}               
-    </div>
-    <div class="col">
-        <h2 >KHOẢN CHI</h2>
-        <div onclick="createNewTypeNeg({{user.id}}, {{month}}, {{year}})">Thêm khoản chi</div>
-        {% for type in expense_types%}
-        <div id="type{{type.expense_type.id}}">
-            <h3 > {{forloop.counter}}. {{type.expense_type.name}} </h3>
-            <p > Hạn mức: {{type.expense_type.getAbs}} </p>
-            <p > Đã chi: {{type.value}} </p>
-            <div class="ClickTag " onclick="editTypeOut({{type.expense_type.id}})">EDIT</div>
-            <div class="ClickTag " onclick="deleteType({{type.expense_type.id}})">DELETE</div>
+        <br>
+        <div class="RevenueContainer">
+            {% for type in expense_types %}
+            <div id="type{{type.expense_type.id}}" class="FundContainer Expense">
+                <h3 class="FundTitle Expense    ">{{type.expense_type.name}}</h3>
+                <div class="row RevenueItem">
+                    <div class="col">Spending limit:</div>
+                    <div class="col RevenueValue Expense">{{type.expense_type.maxValue}}</div>
+                </div>
+                <div class="row RevenueItem">
+                    <div class="col">Amount spent:</div>
+                    <div class="col RevenueValue Expense"> {{type.value}} </div>
+                </div>
+                <img class="ButtonIcon" alt="" src="{% static "images/Edit3.png" %}" onclick="editTypeOut({{type.expense_type.id}})">
+                <img class="ButtonIcon" alt="" src="{% static "images/Delete5.png" %}" onclick="deleteType({{type.expense_type.id}})">
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </div>
 
@@ -148,6 +154,12 @@
 
 {% block script %}
 <script >
+    function OpenDiary(userId){
+        location.href = `/diary/id=${userId}`;
+    }
+    function OpenDeadline(userId){
+        location.href = `/deadline/id=${userId}`;
+    }
     function updateFunds(userId){
         let updateFundsWindow = window.open(
             `/finance/fund/update/id=${userId}`,

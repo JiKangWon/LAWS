@@ -1,0 +1,68 @@
+/* ! BODY */
+body{
+    background-color: #f0f0f0;
+    overflow-x: hidden;
+    width: 100vw;
+}
+#MainContainer{
+}
+
+/* ! INFORMATION CONTAINER */
+#InformationContainer{
+    width: 95%;
+    margin: 10px auto;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+#LeftContainer{
+    width: 100%;
+    background-color: #ffffff;
+    margin-right: 5px;
+}
+h2.Title{
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    padding-top: 10px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid black;
+}
+#RightContainer{
+    width: 100%;
+    background-color: #ffffff;
+    margin-left: 5px;
+}
+/* ! Header */
+#Header{
+    background-color: #ffffff;
+    width: 95%;
+    margin: 10px auto;
+    padding: 10px 0;
+}
+h1.Title{
+    font-size: 150px;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.MiniTitle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.MiniTitle-Icon{
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+.MiniTitle-Text{
+    font-size: 20px;
+    display: inline;
+    margin: 0;
+}
+p.Note{
+    padding: 1px 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+}

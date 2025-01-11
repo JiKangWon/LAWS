@@ -1,0 +1,72 @@
+/* ! BODY */
+body{
+    width: 100vw;
+    height: 100vh;
+    background-color: #f0f0f0;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#MainContainer{
+    margin: 0 auto;
+    width: 60%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+/* ! Title of page */
+h1.Title{
+    font-size: 150px;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.MiniTitle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.MiniTitle-Icon{
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+.MiniTitle-Text{
+    font-size: 20px;
+    display: inline;
+    margin: 0;
+}
+p.Note{
+    padding: 1px 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+/* ! INPUT FRAME */
+form{
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+label{
+    width: 95%;
+    margin: 10px auto;
+}
+input,
+select,
+textarea{
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+/* ! button */
+button{
+    width: 95%;
+    background-color: black;
+    border-radius: 5px;
+    color: #ffffff;
+    margin: 10px;
+}

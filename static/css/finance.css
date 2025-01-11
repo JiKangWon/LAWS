@@ -6,7 +6,6 @@ body{
     margin: 0 auto;
     width: 97%;
     background-color: #ffffff;
-
 }
 /* ! NAVBAR */
 #navbar{
@@ -90,6 +89,9 @@ img.Logo:hover{
     margin: 20px;
     border-radius: 20px;
 }
+.col.MainFunction-Container{
+    padding: 0 20px;
+}
 .AddIcon{
     border-radius: 5px;
     width: 40px;
@@ -106,7 +108,6 @@ img.Logo:hover{
     width: 60%;
     margin: 20px auto;
     margin-top: -150px;
-    border: 1px solid black;
 }
 .FunctionItem{
     display: flex;
@@ -117,6 +118,8 @@ img.Logo:hover{
     width: 100%;
     height: 250px;
     box-sizing: border-box;
+    border: 1px solid black;
+    background-color: #ffffff;
 }
 .FunctionItem:hover{
     background-color: black;
@@ -130,22 +133,31 @@ img.Logo:hover{
 .FunctionTitle{
     font-size: 18px;
     font-weight: bold;
-}
-.BetweenItem{
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    color: black;
 }
 /* ! GIAO DIỆN KHOẢN THU */
+.TitleFrame{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
 #In{
     background-color: #ffffff;
     width: 100%;
     margin: 20px auto;
 }
+.RevenueContainer{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content:flex-start;
+}
 h2.ContainerTitle{
     margin: 20px;
-    display: inline;
+    display: inline-block;
     background-color: black;
     color: #ffffff;
+    box-sizing: border-box;
 }
 h3.FundTitle{
     margin: 20px;
@@ -155,10 +167,53 @@ h3.FundTitle{
     background-color: black;
     color: #ffffff;
     display: inline-block;
-    width: 20%;
-    height: 200px;
+    width: 22%;
+    height: 250px;
     border-radius: 10px;
     margin: 20px;
 }
-
+.RevenueValue{
+    padding: 5px;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+}
+.RevenueItem{
+    margin: 10px;
+}
 /* !GIAO DIỆN KHOẢN CHI */
+#Out{
+    background-color: black;
+    color: #ffffff;
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px 0;
+}
+h2.ContainerTitle.Expense{
+    background-color: #ffffff;
+    color: black;
+}
+/* ! CÁC NÚT DELETE ADD EDIT */
+.ButtonIcon{
+    width: 50px; 
+    height: 50px;
+    margin: 10px;
+    border-radius: 5px;
+}
+.ButtonIcon:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+.FundContainer.Expense{
+    background-color: #ffffff;
+    color: black;
+}
+h3.FundTitle.Expense{
+    border-bottom: 1px solid black;
+}
+.RevenueValue.Expense{
+    border: 1px solid black;
+}
+/* ! TRƯỜNG HỢP ĐẶC BIỆT */
+.col{
+    padding: 0;
+}

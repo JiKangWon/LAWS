@@ -73,7 +73,7 @@ class Class(models.Model):
 
     # ! Fields
     name = models.CharField(max_length=50, verbose_name='Tên lớp')
-    startDate = models.DateField(verbose_name='Thời gian mở lớp', null=True, auto_now_add=True)
+    startDate = models.DateField(verbose_name='Thời gian mở lớp', null=True)
     endDate = models.DateField(verbose_name='Thời gian đóng lớp', null=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='upcoming')
     maxOfDay = models.IntegerField(verbose_name='Số lượng ngày học tối đa trong kỳ', default=50)
