@@ -26,14 +26,42 @@
     </div>
     <div id="InformationContainer" class="row">
         <div id="LeftContainer" class="col">
-            <h2 class="Title">basic information</h2>
-            <label for="name">
-                Name:
-                
-            </label>
+            <div class="TitleContainer"><h2 class="Title">basic information</h2></div>
+            <form method="POST">
+                {% csrf_token %}
+                <label for="name">
+                    Name:
+                    <input id="name" type="text" name="name" value="{{class.name}}" required />
+                </label>
+                <label for="startDate">
+                    Start date:
+                    <input id="startDate" type="date" name="startDate" value="{{class.startDate | date:"Y-m-d"}}" required />
+                </label>
+                <label for="endDate">
+                    End date:
+                    <input id="endDate" type="date" name="endDate" value="{{class.endDate | date:"Y-m-d"}}" required />
+                </label>
+                <label for="status">
+                    Status:
+                    <select id="status" name="status">
+                        <option value="{{class.status}}"> {{class.status}} </option>
+                        {% for difStatus in class.getDifferentStatus %}
+                        <option value="{{difStatus}}"> {{difStatus}} </option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <button type="submit">SAVE</button>
+            </form>         
         </div>
         <div id="RightContainer" class="col" >
-            <p >Child information</p>
+            <div class="TitleContainer"><h2 class="Title">subject list</h2></div>
+            {% for subject in subjects %}
+            <div id="subject{{subject.id}}" class="ChildItemContainer">
+                <a class="ChildItem" href="{% url "manageSubject" subjectId=subject.id %}">{{subject.name}}</a>
+                <img src="{% static "images/Delete6.png" %}" alt="Delete icon" class="ButtonIcon Delete" onclick="delSubject({{subject.id}})">
+            </div>
+            {% endfor %}
+            <img src="{% static "images/Add4.png" %}" alt="Add class icon" class="ButtonIcon" onclick="createNewSubject({{class.id}})"> 
         </div>
     </div>
 </div>

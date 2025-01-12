@@ -359,6 +359,8 @@ def getEditTerm(request, termId):
     context = {
         'term':term,
         'classes':classes,
+        'user':term.user,
+        'userInfo': UserInfo.objects.filter(user=term.user).first(),
     }
     if request.method == 'POST':
         postName = request.POST.get('name')
@@ -1161,6 +1163,7 @@ def editDiary(request, diaryId):
     context = {
         'user': diary.user,
         'diary': diary,
+        'userInfo': UserInfo.objects.filter(user=diary.user).first(),
     }
     if request.method == "POST":
         postTitle = request.POST.get('title')

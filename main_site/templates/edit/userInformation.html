@@ -4,75 +4,70 @@
 {% block style %}
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>  
-<link rel="stylesheet" href="{% static "css/create.css" %}" type="text/css">
+<link rel="stylesheet" href="{% static "css/editModel.css" %}" type="text/css">
 {% endblock style %}
 
 {% block title %}LAW
 {% endblock title %}
 
 {% block content %}
-<div class="MainContainer">
-    <h1 >Edit user information</h1>
-    <form method="POST">
-        {% csrf_token %}
-        <div class="row">
-            <div class="col-7">
-                <div class="name InputElement">
-                    <label for="name" >
-                        <div class="LabelContainer">Name: </div>
-                    <input type="text" name="name" id ="name" value="{{userInfo.name}}" >
-                    </label>
-                </div>
-                <div class="email InputElement">
-                    <label for="email" >
-                        <div class="LabelContainer">Email</div>
-                    <input type="text" name="email" id ="email" value="{{userInfo.email}}" >
-                    </label>
-                </div>
-                <div class="phoneNumber InputElement">
-                    <label for="phoneNumber" >
-                        <div class="LabelContainer">Phone number:</div>
-                    <input type="text" name="phoneNumber" id ="phoneNumber" value="{{userInfo.phoneNumber}}" >
-                    </label>
-                </div>
-                <div class="address InputElement">
-                    <label for="address" >
-                        <div class="LabelContainer">Address:</div>
-                    <input type="text" name="address" id ="address" value="{{userInfo.address}}" >
-                    </label>
-                </div>
-                <div class="dob InputElement">
-                    <label for="dob" >
-                        <div class="LabelContainer">Date of birth:</div>
-                    <input type="date" name="dob" id ="dob" value="{{userInfo.dob | date:'Y-m-d' }}" >
-                    </label>
-                </div>
-                <div class="school InputElement">
-                    <label for="school" >
-                        <div class="LabelContainer">School:</div>
-                    <input type="text" name="school" id ="school" value="{{userInfo.school}}" >
-                    </label>
-                </div>
-            </div>
-            <div class="col-5">
-                <img class="IconForEditPage" src="{% static "images/Cute2.png" %}" alt="">
-            </div>
+<div id="MainContainer">
+    <div id="Header">
+        <div class="MiniTitle" >
+            <p class="Note MiniTitle-Text">User: {{userInfo.name}} </p>
+            <p class="MiniTitle-Text"> {{subject.class_object.name}} </p>
         </div>
-        <h2 >TERMS INFORMATION</h2>
-        {% for term in terms %}
-        <div id="term{{term.id}}" class="ChildModelContainer row" > 
-            <div class="col-11">
-                <a href="{% url "manageTerm" termId=term.id %}">
-                    <p class="ChildModelName"> {{term.name}} </p>
-                </a>
-            </div>
-            <div class="col-1"><img src="{% static "images/Delete2.png" %}" alt="Delete icon" class="DeleteIcon" onclick="delTerm({{term.id}})"></div>
+        <h1 class="Title">information</h1>
+        <div class="MiniTitle" >
+            <img src="{% static "images/Edit2.jpg" %}" alt="" class="MiniTitle-Icon"/>
+            <p class="MiniTitle-Text">information editor</p>
         </div>
-        {% endfor %}
-        <img src="{% static "images/Add1.png" %}" alt="Add class icon" class="AddIcon" onclick="createNewTerm({{user.id}})"> 
-        <div class="SubmitButton"><button type="submit">SAVE</button></div>
-    </form>
+    </div>
+    <div id="InformationContainer" class="row">
+        <div id="LeftContainer" class="col">
+            <div class="TitleContainer"><h2 class="Title">basic information</h2></div>
+            <form method="POST">
+                {% csrf_token %}
+                <label for="name">
+                    Name:
+                    <input id="name" type="text" name="name" value="{{userInfo.name}}" required />
+                </label>
+                <label for="email">
+                    Email:
+                    <input id="email" type="email" name="email" value="{{userInfo.email}}" required />
+                </label>
+                <label for="phoneNumber" >
+                    Phone number:
+                    <input type="text" name="phoneNumber" id ="phoneNumber" value="{{userInfo.phoneNumber}}" required/>
+                </label>
+                <label for="address" >
+                    Address:
+                    <input type="text" name="address" id ="address" value="{{userInfo.address}}" required/>
+                </label>
+                <label for="dob" >
+                    Date of birth:
+                    <input type="date" name="dob" id ="dob" value="{{userInfo.dob|date:'Y-d-m'}}" required/>
+                </label>
+                <label for="school">
+                    School:
+                    <input type="text" name="school" id ="school" value="{{userInfo.school}}" required/>
+                </label>
+                <button type="submit">SAVE</button>
+            </form>         
+        </div>
+        <div id="RightContainer" class="col" >
+            <div class="TitleContainer"><h2 class="Title">term list</h2></div>
+            {% for term in terms %}
+            <div class="ChildItemContainer " id="term{{term.id}}">
+                <a class="ChildItem" href="{% url "manageTerm" termId=term.id %}"> {{term.name}} </a>
+                <img src="{% static "images/Delete6.png" %}" alt="Delete icon" class="ButtonIcon Delete" onclick="delTerm({{term.id}})">
+            </div>
+            {% endfor %}
+            <img src="{% static "images/Add4.png" %}" alt="Add class icon" class="ButtonIcon" onclick="createNewTerm({{user.id}})"> 
+        </div>
+    </div>
 </div>
+
 {% endblock content %}
 
 {% block script %}

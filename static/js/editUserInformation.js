@@ -23,7 +23,7 @@ async function delTerm(termId) {
             },
         });
         if (response.ok) {
-            const termContainer = document.getElementById(`termId${termId}`);
+            const termContainer = document.getElementById(`term${termId}`);
             if (termContainer) {
                 termContainer.remove();
             }
